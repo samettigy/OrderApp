@@ -60,7 +60,7 @@
                 <EditText
                     android:layout_width="match_parent"
                     android:layout_height="50dp"
-                    android:id="@+id/textLoginPassword"
+                    android:id="@+id/signupPassword"
                     android:background="@drawable/custom_edittext"
                     android:hint="Password"
                     android:inputType="textPassword"
@@ -82,7 +82,7 @@
                 <EditText
                     android:layout_width="match_parent"
                     android:layout_height="50dp"
-                    android:id="@+id/textLoginPassword2"
+                    android:id="@+id/signupConfirmPassword"
                     android:background="@drawable/custom_edittext"
                     android:hint="Re-Password"
                     android:inputType="textPassword"
