@@ -16,23 +16,28 @@ import com.android.orderapp.R
 import com.android.orderapp.databinding.FragmentSplashBinding
 import com.android.orderapp.ui.base.BaseFragment
 import com.android.orderapp.ui.base.FragmentInflate
+import com.google.firebase.auth.FirebaseAuth
 
 class SplashFragment : BaseFragment<SplashViewModel, FragmentSplashBinding>() {
 
     override val viewModel: SplashViewModel by viewModels()
     override val viewBindingInflater: FragmentInflate<FragmentSplashBinding>
         get() = FragmentSplashBinding::inflate
+    private lateinit var firebaseAuth: FirebaseAuth
 
 
-    override fun onCreateView(
-        inflater: LayoutInflater, container: ViewGroup?,
-        savedInstanceState: Bundle?
-    ): View? {
+
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+        firebaseAuth = FirebaseAuth.getInstance()
+
         Handler(Looper.getMainLooper()).postDelayed({
-            findNavController().navigate(R.id.splashToLogin)
-        },2000)
-        val view = inflater.inflate(R.layout.fragment_splash, container,false)
-        return view
+            if (firebaseAuth.currentUser != null) {
+                findNavController().navigate(R.id.splashToHome)
+            } else {
+                findNavController().navigate(R.id.splashToLogin)
+            }
+        }, 2000)
     }
 
 }

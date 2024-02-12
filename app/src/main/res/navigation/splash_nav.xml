@@ -13,6 +13,10 @@
         <action
             android:id="@+id/splashToLogin"
             app:destination="@id/login_nav" />
+        <action
+            android:id="@+id/splashToHome"
+            app:destination="@id/main_activity_nav" />
     </fragment>
     <include app:graph="@navigation/login_nav" />
+    <include app:graph="@navigation/main_activity_nav" />
 </navigation>
