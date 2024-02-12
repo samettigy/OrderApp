@@ -26,11 +26,23 @@ class ForgotPasswordFragment :
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        firebaseAuth = FirebaseAuth.getInstance()
+
 
         binding.btnReset.setOnClickListener {
-            val mail = binding.forgotUsername.text.toString()
-            resetPassword(mail)
+            val email = binding.forgotUsername.text.toString()
+
+            if (email.isNotEmpty()) {
+                viewModel.forgotPassword(
+                    email = email,
+                    loginSuccess = {
+                        findNavController().navigate(R.id.forgotToLogin)
+                    },
+                    loginError = { message ->
+                        showToastMessage(message)
+                    })
+            } else {
+                showToastMessage("Fields cannot be empty")
+            }
         }
 
         binding.btnForgotToLogin.setOnClickListener {
@@ -38,15 +50,5 @@ class ForgotPasswordFragment :
         }
     }
 
-    fun resetPassword(email: String) {
-        firebaseAuth.sendPasswordResetEmail(email).addOnCompleteListener {
-            if (it.isSuccessful) {
-                Toast.makeText(requireContext(), "Link sent to your e-mail", Toast.LENGTH_SHORT)
-                    .show()
-            } else {
-                Toast.makeText(requireContext(), "Hata verdimmm :)", Toast.LENGTH_SHORT).show()
-            }
-        }
-    }
 
 }
