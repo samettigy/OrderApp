@@ -14,25 +14,21 @@
         android:layout_width="0dp"
         android:layout_height="0dp"
         app:defaultNavHost="true"
-        app:layout_constraintBottom_toTopOf="@+id/btmNavigation"
+        app:layout_constraintBottom_toTopOf="@id/btmNavigation"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="1.0"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.0"
-        app:navGraph="@navigation/login_nav"
-        tools:layout="@layout/fragment_login" />
+        app:navGraph="@navigation/splash_nav"
+        tools:layout="@layout/fragment_splash" />
 
     <com.google.android.material.bottomnavigation.BottomNavigationView
+        android:id="@+id/btmNavigation"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:id="@+id/btmNavigation"
         android:visibility="gone"
         app:menu="@menu/bottom_menu"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintBottom_toBottomOf="parent"
-        tools:layout_editor_absoluteX="46dp"
-        tools:layout_editor_absoluteY="449dp" />
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
