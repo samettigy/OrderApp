@@ -33,8 +33,10 @@ class SplashFragment : BaseFragment<SplashViewModel, FragmentSplashBinding>() {
 
         Handler(Looper.getMainLooper()).postDelayed({
             if (firebaseAuth.currentUser != null) {
+                showLoadingDialog()
                 findNavController().navigate(R.id.splashToHome)
             } else {
+                hideLoadingDialog()
                 findNavController().navigate(R.id.splashToLogin)
             }
         }, 2000)

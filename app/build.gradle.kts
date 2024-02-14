@@ -45,6 +45,8 @@ android {
 
 dependencies {
     implementation("com.google.firebase:firebase-auth:22.3.1")
+    implementation("com.google.firebase:firebase-firestore:24.10.0")
+    implementation(platform("com.google.firebase:firebase-bom:32.7.0"))
     val nav_version = "2.7.6"
 
 
