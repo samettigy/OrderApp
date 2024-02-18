@@ -4,6 +4,7 @@ package com.android.orderapp.ui.fragments.login
 import android.os.Bundle
 import android.view.View
 import android.widget.Toast
+import androidx.fragment.app.FragmentManager
 import androidx.fragment.app.activityViewModels
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
@@ -23,10 +24,9 @@ class LoginFragment : BaseFragment<LoginViewModel, FragmentLoginBinding>() {
     override val viewBindingInflater: FragmentInflate<FragmentLoginBinding>
         get() = FragmentLoginBinding::inflate
 
+
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-
-
 
         binding.btnLogin.setOnClickListener {
             val email = binding.textLoginUsername.text.toString()
@@ -37,7 +37,7 @@ class LoginFragment : BaseFragment<LoginViewModel, FragmentLoginBinding>() {
                     email = email,
                     password = password,
                     loginSuccess = {
-                        findNavController().navigate(R.id.loginToHomePage)
+                        findNavController().navigate(R.id.action_loginFragment_to_homeFragment)
                     },
                     loginError = { message ->
                         showToastMessage(message)

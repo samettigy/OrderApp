@@ -5,8 +5,13 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.EditText
+import android.widget.Toast
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.FragmentManager
 import androidx.fragment.app.viewModels
+import androidx.navigation.NavOptions
+import androidx.navigation.fragment.NavHostFragment
 import androidx.navigation.fragment.findNavController
 import com.android.orderapp.R
 import com.android.orderapp.databinding.FragmentProfileBinding
@@ -19,7 +24,7 @@ import com.google.firebase.auth.FirebaseAuth
 
 class ProfileFragment : BaseFragment<ProfileViewModel, FragmentProfileBinding>() {
 
-
+    private lateinit var firebaseAuth: FirebaseAuth
     override val viewModel: ProfileViewModel by viewModels()
     override val viewBindingInflater: FragmentInflate<FragmentProfileBinding>
         get() = FragmentProfileBinding::inflate
@@ -27,6 +32,7 @@ class ProfileFragment : BaseFragment<ProfileViewModel, FragmentProfileBinding>()
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+
 
         binding.editButton.setOnClickListener {
             findNavController().navigate(R.id.editProfileFragment)
@@ -37,7 +43,7 @@ class ProfileFragment : BaseFragment<ProfileViewModel, FragmentProfileBinding>()
             alertDialogBuilder.setMessage("Emin misiniz?")
             alertDialogBuilder.setPositiveButton("Evet") { dialog, which ->
                 FirebaseAuth.getInstance().signOut()
-                findNavController().navigate(R.id.login_nav)
+                findNavController().navigate(R.id.profileFragmentToLoginFragment)
             }
             alertDialogBuilder.setNegativeButton("Hayır") { dialog, which ->
 

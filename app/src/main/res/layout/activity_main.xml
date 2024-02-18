@@ -18,7 +18,7 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:navGraph="@navigation/splash_nav"
+        app:navGraph="@navigation/main_activity_nav"
         tools:layout="@layout/fragment_splash" />
 
     <com.google.android.material.bottomnavigation.BottomNavigationView

@@ -21,7 +21,6 @@ abstract class BaseFragment<VM : BaseViewModel, VB : ViewBinding> : Fragment() {
 
     val binding: VB get() = _binding!!
 
-
     open val viewBindingInflater: FragmentInflate<VB>? = null
 
     abstract val viewModel: VM
@@ -52,6 +51,7 @@ abstract class BaseFragment<VM : BaseViewModel, VB : ViewBinding> : Fragment() {
             }
         }
     }
+
 
     protected fun showLoadingDialog() {
         if (progressBar == null) {

@@ -27,12 +27,17 @@ class MainActivity : BaseActivity<MainViewModel, ActivityMainBinding>() {
     override val viewBindingInflater: ActivityInflate<ActivityMainBinding>
         get() = ActivityMainBinding::inflate
 
+    val fragmentManager = supportFragmentManager
+
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         createBottomNavigation()
 
+
+
     }
+
 
 
     private fun createBottomNavigation() {

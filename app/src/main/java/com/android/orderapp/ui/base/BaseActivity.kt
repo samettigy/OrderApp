@@ -21,8 +21,13 @@ abstract class BaseActivity<VM : BaseViewModel, VB : ViewBinding> : AppCompatAct
 
     open var viewBinding: VB? = null
 
+
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+
+
+
 
         viewBindingInflater?.invoke(layoutInflater)?.let { nonNullViewBinding ->
             viewBinding = nonNullViewBinding

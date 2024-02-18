@@ -1,22 +1,18 @@
 package com.android.orderapp.ui.fragments.login
 
-import android.content.Intent
 import android.os.Bundle
-import androidx.fragment.app.Fragment
-import android.view.LayoutInflater
 import android.view.View
-import android.view.ViewGroup
 import android.widget.Toast
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
-import com.android.orderapp.MainActivity
 import com.android.orderapp.R
 import com.android.orderapp.databinding.FragmentSignUpBinding
 import com.android.orderapp.ui.base.BaseFragment
 import com.android.orderapp.ui.base.FragmentInflate
-import com.google.firebase.auth.FirebaseAuth
+import dagger.hilt.android.AndroidEntryPoint
 
 
+@AndroidEntryPoint
 class SignUpFragment : BaseFragment<SignUpViewModel, FragmentSignUpBinding>() {
 
     override val viewModel: SignUpViewModel by viewModels()
@@ -38,7 +34,7 @@ class SignUpFragment : BaseFragment<SignUpViewModel, FragmentSignUpBinding>() {
                         password = password,
                         confirmPassword = confirmPassword,
                         loginSuccess = {
-                            findNavController().navigate(R.id.signupToLogin)
+                            findNavController().navigate(R.id.action_signUpFragment_to_homeFragment)
                         },
                         loginError = { message ->
                             showToastMessage(message)
@@ -54,7 +50,7 @@ class SignUpFragment : BaseFragment<SignUpViewModel, FragmentSignUpBinding>() {
         }
 
         binding.btnSignupToLogin.setOnClickListener {
-            findNavController().navigate(R.id.signupToLogin)
+            findNavController().popBackStack()
         }
 
     }

@@ -40,7 +40,7 @@ class LoginViewModel @Inject constructor(
 
                     val db = Firebase.firestore
 
-                    val userDocument = db.collection("test2").document(userId)
+                    val userDocument = db.collection("users").document(userId)
 
                     val userInfo = UserInfo (
                         email = userEmail

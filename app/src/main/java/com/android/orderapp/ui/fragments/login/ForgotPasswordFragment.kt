@@ -35,7 +35,7 @@ class ForgotPasswordFragment :
                 viewModel.forgotPassword(
                     email = email,
                     loginSuccess = {
-                        findNavController().navigate(R.id.forgotToLogin)
+                        findNavController().popBackStack()
                     },
                     loginError = { message ->
                         showToastMessage(message)
@@ -46,7 +46,7 @@ class ForgotPasswordFragment :
         }
 
         binding.btnForgotToLogin.setOnClickListener {
-            findNavController().navigate(R.id.forgotToLogin)
+            findNavController().popBackStack()
         }
     }
 
