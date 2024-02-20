@@ -26,7 +26,7 @@
 
     <fragment
         android:id="@+id/loginFragment"
-        android:name="com.android.orderapp.ui.fragments.login.LoginFragment"
+        android:name="com.android.orderapp.ui.fragments.auth.login.LoginFragment"
         android:label="fragment_login"
         tools:layout="@layout/fragment_login">
         <action
@@ -41,7 +41,7 @@
     </fragment>
     <fragment
         android:id="@+id/signUpFragment"
-        android:name="com.android.orderapp.ui.fragments.login.SignUpFragment"
+        android:name="com.android.orderapp.ui.fragments.auth.register.SignUpFragment"
         android:label="fragment_sign_up"
         tools:layout="@layout/fragment_sign_up">
         <action
@@ -53,7 +53,7 @@
     </fragment>
     <fragment
         android:id="@+id/forgotPasswordFragment"
-        android:name="com.android.orderapp.ui.fragments.login.ForgotPasswordFragment"
+        android:name="com.android.orderapp.ui.fragments.auth.forgot.ForgotPasswordFragment"
         android:label="fragment_forgot_password"
         tools:layout="@layout/fragment_forgot_password" />
 
@@ -91,10 +91,18 @@
         <action
             android:id="@+id/action_profileFragment_to_editProfileFragment"
             app:destination="@id/editProfileFragment" />
+        <action
+            android:id="@+id/profileToChangePassword"
+            app:destination="@id/changePasswordFragment" />
     </fragment>
     <fragment
         android:id="@+id/editProfileFragment"
         android:name="com.android.orderapp.ui.fragments.profile.EditProfileFragment"
         android:label="fragment_edit_profile"
         tools:layout="@layout/fragment_edit_profile" />
+    <fragment
+        android:id="@+id/changePasswordFragment"
+        android:name="com.android.orderapp.ui.fragments.profile.ChangePasswordFragment"
+        android:label="fragment_change_password"
+        tools:layout="@layout/fragment_change_password" />
 </navigation>

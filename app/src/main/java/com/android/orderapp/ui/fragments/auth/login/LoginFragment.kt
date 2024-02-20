@@ -1,19 +1,18 @@
-package com.android.orderapp.ui.fragments.login
+package com.android.orderapp.ui.fragments.auth.login
 
 
 import android.os.Bundle
+import android.os.Handler
+import android.os.Looper
 import android.view.View
-import android.widget.Toast
-import androidx.fragment.app.FragmentManager
-import androidx.fragment.app.activityViewModels
+import androidx.appcompat.app.AlertDialog
 import androidx.fragment.app.viewModels
+import androidx.navigation.NavOptions
 import androidx.navigation.fragment.findNavController
 import com.android.orderapp.R
 import com.android.orderapp.databinding.FragmentLoginBinding
 import com.android.orderapp.ui.base.BaseFragment
 import com.android.orderapp.ui.base.FragmentInflate
-import com.google.android.material.bottomnavigation.BottomNavigationView
-import com.google.firebase.auth.FirebaseAuth
 import dagger.hilt.android.AndroidEntryPoint
 
 
@@ -29,23 +28,23 @@ class LoginFragment : BaseFragment<LoginViewModel, FragmentLoginBinding>() {
         super.onViewCreated(view, savedInstanceState)
 
         binding.btnLogin.setOnClickListener {
-            val email = binding.textLoginUsername.text.toString()
-            val password = binding.textLoginPassword.text.toString()
-
-            if (email.isNotEmpty() && password.isNotEmpty()) {
-                viewModel.singIn(
-                    email = email,
-                    password = password,
-                    loginSuccess = {
+            viewModel.singIn(
+                email = binding.textLoginUsername.text.toString(),
+                password = binding.textLoginPassword.text.toString(),
+                loginSuccess = {
+                    val loading = showLoadingDialog(requireActivity())
+                    val handler = Handler(Looper.getMainLooper())
+                    handler.postDelayed({
                         findNavController().navigate(R.id.action_loginFragment_to_homeFragment)
-                    },
-                    loginError = { message ->
-                        showToastMessage(message)
-                    })
-            } else {
-                showToastMessage("Fields cannot be empty")
-            }
+                        hideLoadingDialog(loading)
+                    },1000)
+                },
+                loginError = { message ->
+                    showToastMessage(message)
+                })
         }
+
+
 
         binding.textForgot.setOnClickListener {
             findNavController().navigate(R.id.loginToForgotPassword)

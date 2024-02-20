@@ -1,7 +1,11 @@
 package com.android.orderapp.ui.base
 
+import android.app.Activity
+import android.app.AlertDialog
 import android.app.ProgressDialog
+import android.content.Context
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -11,6 +15,7 @@ import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.lifecycleScope
 import androidx.viewbinding.ViewBinding
+import com.android.orderapp.R
 import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch
 
@@ -19,13 +24,13 @@ typealias  FragmentInflate<T> = (inflater: LayoutInflater, parent: ViewGroup?, a
 abstract class BaseFragment<VM : BaseViewModel, VB : ViewBinding> : Fragment() {
     private var _binding: VB? = null
 
-    val binding: VB get() = _binding!!
+    public val binding: VB get() = _binding!!
 
     open val viewBindingInflater: FragmentInflate<VB>? = null
 
     abstract val viewModel: VM
 
-    private var progressBar: ProgressBar? = null
+    private var progressBar: ProgressDialog? = null
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -41,32 +46,25 @@ abstract class BaseFragment<VM : BaseViewModel, VB : ViewBinding> : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        lifecycleScope.launch {
-            viewModel.loadingState.collectLatest {
-                if (it == LoadingState.SHOW) {
-                    showLoadingDialog()
-                } else {
-                    hideLoadingDialog()
-                }
-            }
-        }
+
+    }
+
+    protected fun showLoadingDialog(activity: Activity) : AlertDialog {
+        val dialogView = LayoutInflater.from(activity).inflate(R.layout.loading_dialog,null)
+        val builder = AlertDialog.Builder(activity)
+        builder.setView(dialogView)
+        val dialog = builder.create()
+        dialog.show()
+        return dialog
+    }
+
+    open fun hideLoadingDialog(dialog: AlertDialog)  {
+        dialog?.dismiss()
     }
 
 
-    protected fun showLoadingDialog() {
-        if (progressBar == null) {
-            progressBar = ProgressBar(requireContext())
-            progressBar?.isIndeterminate = true
-        } else {
-            progressBar?.visibility= View.GONE
-        }
-    }
 
-    protected fun hideLoadingDialog() {
-        progressBar?.visibility = View.GONE
-    }
-
-    protected fun showToastMessage(message: String) {
+    open fun showToastMessage(message: String) {
         Toast.makeText(requireContext(), message, Toast.LENGTH_SHORT).show()
     }
 }

@@ -35,7 +35,7 @@ class ProfileFragment : BaseFragment<ProfileViewModel, FragmentProfileBinding>()
 
 
         binding.editButton.setOnClickListener {
-            findNavController().navigate(R.id.editProfileFragment)
+            findNavController().navigate(R.id.action_profileFragment_to_editProfileFragment)
         }
 
         binding.exitButton.setOnClickListener {
@@ -50,6 +50,10 @@ class ProfileFragment : BaseFragment<ProfileViewModel, FragmentProfileBinding>()
             }
             val alertDialog = alertDialogBuilder.create()
             alertDialog.show()
+        }
+
+        binding.updatePasswordButton.setOnClickListener {
+            findNavController().navigate(R.id.profileToChangePassword)
         }
 
     }

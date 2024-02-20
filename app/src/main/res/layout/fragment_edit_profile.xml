@@ -97,7 +97,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:id="@+id/profileEmail"
-                android:text="Email"
+                android:text="@{viewModel.mail}"
                 android:layout_weight="1"
                 android:textColor="@color/grey"
                 android:textSize="18sp"/>
@@ -119,7 +119,7 @@
     </LinearLayout>
 
     <Button
-        android:id="@+id/editButton"
+        android:id="@+id/updateButton"
         android:layout_width="0dp"
         android:layout_height="60dp"
         android:backgroundTint="@color/lavender"
@@ -131,6 +131,7 @@
         app:layout_constraintEnd_toEndOf="@id/linearLayout"
         app:layout_constraintStart_toStartOf="@id/linearLayout"
         app:layout_constraintTop_toBottomOf="@+id/linearLayout" />
+
 
 
 
