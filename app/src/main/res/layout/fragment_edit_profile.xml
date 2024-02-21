@@ -30,8 +30,8 @@
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:id="@+id/titleUsername"
-        android:text="username"
+        android:id="@+id/titleSurname"
+        android:text="Surname"
         android:textColor="@color/black"
         android:textSize="18sp"
         app:layout_constraintEnd_toEndOf="@id/titleName"
@@ -49,7 +49,7 @@
         android:layout_marginTop="20dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/titleUsername">
+        app:layout_constraintTop_toBottomOf="@id/titleSurname">
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -66,7 +66,8 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:id="@+id/profileName"
-                android:text="Name"
+                android:hint="Name"
+                android:text=""
                 android:layout_weight="1"
                 android:textColor="@color/grey"
                 android:textSize="18sp"/>
@@ -82,7 +83,8 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:id="@+id/profileSurname"
-                android:text="Surname"
+                android:hint="Surname"
+                android:text=""
                 android:layout_weight="1"
                 android:textColor="@color/grey"
                 android:textSize="18sp"/>
@@ -97,7 +99,8 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:id="@+id/profileEmail"
-                android:text="@{viewModel.mail}"
+                android:hint="Email"
+                android:text=""
                 android:layout_weight="1"
                 android:textColor="@color/grey"
                 android:textSize="18sp"/>
@@ -111,7 +114,8 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:id="@+id/profileGender"
-                android:text="Gender"
+                android:hint="Gender"
+                android:text=""
                 android:layout_weight="1"
                 android:textColor="@color/grey"
                 android:textSize="18sp"/>
