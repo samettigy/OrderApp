@@ -2,23 +2,14 @@ package com.android.orderapp.ui.fragments.profile
 
 import android.content.ContentValues.TAG
 import android.os.Bundle
-import android.text.Editable
 import android.text.SpannableStringBuilder
 import android.util.Log
-import androidx.fragment.app.Fragment
-import android.view.LayoutInflater
 import android.view.View
-import android.view.ViewGroup
-import android.widget.Toast
 import androidx.fragment.app.viewModels
-import androidx.lifecycle.MutableLiveData
-import com.android.orderapp.R
 import com.android.orderapp.databinding.FragmentEditProfileBinding
 import com.android.orderapp.ui.base.BaseFragment
 import com.android.orderapp.ui.base.FragmentInflate
 import com.google.firebase.auth.FirebaseAuth
-import com.google.firebase.firestore.FirebaseFirestore
-import com.google.firebase.firestore.firestore
 import com.google.firebase.firestore.ktx.firestore
 import com.google.firebase.ktx.Firebase
 
@@ -35,28 +26,51 @@ class EditProfileFragment : BaseFragment<EditProfileViewModel, FragmentEditProfi
         super.onViewCreated(view, savedInstanceState)
 
         val db = Firebase.firestore
-        val usersRef = db.collection("users")
+        val emailText = binding.profileEmail
+        val uuid = firebaseAuth.currentUser?.uid
+        val docRef = db.collection("users").document("$uuid")
 
-        usersRef.get().addOnSuccessListener { result ->
-            for (document in result) {
+        docRef.get().addOnSuccessListener { document ->
+            if (document != null) {
                 val email = document.getString("email")
-                if (email != null) {
-                    binding.profileEmail.text = SpannableStringBuilder(email)
-                }
+                emailText.text = SpannableStringBuilder(email)
+            } else {
+                showToastMessage("belge boş.")
             }
         }.addOnFailureListener {
-            Log.w(TAG, "error getting documents", it)
+            Log.d(TAG, "Belge alınamadı: ", it)
         }
 
 
-    }
+        binding.updateButton.setOnClickListener {
+            val edittextName = binding.profileName.text.toString()
+            val edittextSurname = binding.profileSurname.text.toString()
+            val edittextGender = binding.profileGender.text.toString()
 
 
+            if (edittextName.isEmpty()) {
+                showToastMessage("fields cannot be empty")
+            } else {
 
 
-    private fun showToast(message: String) {
+                val newData = hashMapOf<String, Any>(
+                    "name" to edittextName,
+                    "surname" to edittextSurname,
+                    "gender" to edittextGender
+                )
 
+                docRef.update(newData)
+                    .addOnSuccessListener { Log.d(TAG, "Belge başarıyla güncellendi!") }
+                    .addOnFailureListener { e -> Log.w(TAG, "Hata oluştu: ", e) }
+            }
+
+        }
     }
 
 
 }
+
+
+
+
+
