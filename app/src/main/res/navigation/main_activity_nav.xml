@@ -99,7 +99,11 @@
         android:id="@+id/editProfileFragment"
         android:name="com.android.orderapp.ui.fragments.profile.EditProfileFragment"
         android:label="fragment_edit_profile"
-        tools:layout="@layout/fragment_edit_profile" />
+        tools:layout="@layout/fragment_edit_profile" >
+        <action
+            android:id="@+id/editProfileToProfile"
+            app:destination="@id/profileFragment" />
+    </fragment>
     <fragment
         android:id="@+id/changePasswordFragment"
         android:name="com.android.orderapp.ui.fragments.profile.ChangePasswordFragment"

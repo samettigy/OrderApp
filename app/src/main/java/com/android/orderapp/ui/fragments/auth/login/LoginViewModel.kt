@@ -1,12 +1,9 @@
 package com.android.orderapp.ui.fragments.auth.login
 
 import androidx.lifecycle.viewModelScope
-import com.android.orderapp.data.entity.UserInfo
 import com.android.orderapp.ui.base.BaseViewModel
 import com.android.orderapp.ui.base.LoadingState
 import com.google.firebase.auth.FirebaseAuth
-import com.google.firebase.firestore.ktx.firestore
-import com.google.firebase.ktx.Firebase
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
 import javax.inject.Inject
