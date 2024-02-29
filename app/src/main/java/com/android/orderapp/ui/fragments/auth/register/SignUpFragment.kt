@@ -33,13 +33,10 @@ class SignUpFragment : BaseFragment<SignUpViewModel, FragmentSignUpBinding>() {
                 loginError = { error ->
                     showToastMessage(error)
                 }
-            )
+            ) }
 
-
-            binding.btnSignupToLogin.setOnClickListener {
-                findNavController().popBackStack()
-            }
-
+        binding.btnSignupToLogin.setOnClickListener {
+            findNavController().popBackStack()
         }
     }
 }

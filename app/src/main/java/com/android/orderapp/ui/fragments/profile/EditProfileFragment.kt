@@ -50,6 +50,10 @@ class EditProfileFragment : BaseFragment<EditProfileViewModel, FragmentEditProfi
                     binding.errorView.visibility = View.GONE
                     binding.contentView.visibility = View.VISIBLE
                     binding.profileName.setText(state.user.name)
+                    binding.profileSurname.setText(state.user.surname)
+                    binding.profileGender.setText(state.user.gender)
+                    binding.profileEmail.setText(state.user.email)
+                    binding.profileImg.setImageURI(viewModel.selectedImg)
                 }
 
                 is EditProfileScreenState.Error -> {
@@ -72,18 +76,22 @@ class EditProfileFragment : BaseFragment<EditProfileViewModel, FragmentEditProfi
 
 
         binding.updateButton.setOnClickListener {
+            //show loading
             val edittextName = binding.profileName.text.toString()
             val edittextSurname = binding.profileSurname.text.toString()
             val edittextGender = binding.profileGender.text.toString()
-            /*      viewModel.updateProfile(onSuccess = {
-                      findNavController().popBackStack()
+            viewModel.updateProfile(onSuccess = {
+//hideloading
+                findNavController().popBackStack()
 
-                  }, onError = {
-                      showToastMessage(it)
-                  })*/
+            }, edittextName = edittextName,
+                edittextSurname = edittextSurname,
+                edittextGender = edittextGender,
+                onError = {
+                    //hideloading
+                    showToastMessage(it)
+                })
             //todo user bilgileri methoda paslanacak
-
-
         }
     }
 }

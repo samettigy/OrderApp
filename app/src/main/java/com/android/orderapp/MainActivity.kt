@@ -21,13 +21,9 @@ import dagger.hilt.android.AndroidEntryPoint
 @AndroidEntryPoint
 class MainActivity : BaseActivity<MainViewModel, ActivityMainBinding>() {
 
-
     override val viewModel: MainViewModel by viewModels()
-
     override val viewBindingInflater: ActivityInflate<ActivityMainBinding>
         get() = ActivityMainBinding::inflate
-
-    val fragmentManager = supportFragmentManager
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -37,7 +33,6 @@ class MainActivity : BaseActivity<MainViewModel, ActivityMainBinding>() {
 
 
     }
-
 
 
     private fun createBottomNavigation() {
@@ -58,8 +53,6 @@ class MainActivity : BaseActivity<MainViewModel, ActivityMainBinding>() {
             binding.btmNavigation.visibility = if (showBottomNav) View.VISIBLE else View.GONE
         }
     }
-
-
 
 
 }

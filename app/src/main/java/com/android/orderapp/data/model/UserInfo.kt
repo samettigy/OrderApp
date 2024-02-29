@@ -1,4 +1,4 @@
-package com.android.orderapp.data.entity
+package com.android.orderapp.data.model
 
 data class UserInfo(
     val profileImageUrl: String? = null,
