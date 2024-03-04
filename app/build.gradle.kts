@@ -44,6 +44,13 @@ android {
 }
 
 dependencies {
+
+    //Image loading
+    implementation("io.coil-kt:coil:1.4.0")
+    //paging
+    implementation("androidx.paging:paging-common-ktx:3.2.0")
+    implementation("androidx.paging:paging-runtime-ktx:3.2.0")
+
     implementation("com.github.bumptech.glide:glide:4.16.0")
     implementation("de.hdodenhof:circleimageview:3.1.0")
     implementation("com.google.firebase:firebase-storage")
@@ -51,7 +58,7 @@ dependencies {
     implementation("com.google.firebase:firebase-firestore:24.10.0")
     implementation(platform("com.google.firebase:firebase-bom:32.7.0"))
     val nav_version = "2.7.6"
-
+    implementation("com.squareup.okhttp3:logging-interceptor:5.0.0-alpha.1")
 
     implementation("androidx.navigation:navigation-fragment-ktx:2.7.6")
     implementation("androidx.navigation:navigation-ui-ktx:2.7.6")

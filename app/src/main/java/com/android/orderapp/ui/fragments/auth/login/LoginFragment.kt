@@ -32,12 +32,10 @@ class LoginFragment : BaseFragment<LoginViewModel, FragmentLoginBinding>() {
                 email = binding.textLoginUsername.text.toString(),
                 password = binding.textLoginPassword.text.toString(),
                 loginSuccess = {
-                    val loading = showLoadingDialog(requireActivity())
                     val handler = Handler(Looper.getMainLooper())
                     handler.postDelayed({
                         findNavController().navigate(R.id.action_loginFragment_to_homeFragment)
-                        hideLoadingDialog(loading)
-                    },1000)
+                    }, 1000)
                 },
                 loginError = { message ->
                     showToastMessage(message)

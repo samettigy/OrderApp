@@ -53,7 +53,16 @@ class EditProfileFragment : BaseFragment<EditProfileViewModel, FragmentEditProfi
                     binding.profileSurname.setText(state.user.surname)
                     binding.profileGender.setText(state.user.gender)
                     binding.profileEmail.setText(state.user.email)
-                    binding.profileImg.setImageURI(viewModel.selectedImg)
+                    if (viewModel.selectedImg != null) {
+                        binding.profileImg.setImageURI(viewModel.selectedImg)
+                    } else {
+                        context?.let {
+                            Glide.with(it)
+                                .load(state.user.profileImageUrl)
+                                .placeholder(R.drawable.ic_pp)
+                                .into(binding.profileImg)
+                        }
+                    }
                 }
 
                 is EditProfileScreenState.Error -> {
@@ -80,17 +89,20 @@ class EditProfileFragment : BaseFragment<EditProfileViewModel, FragmentEditProfi
             val edittextName = binding.profileName.text.toString()
             val edittextSurname = binding.profileSurname.text.toString()
             val edittextGender = binding.profileGender.text.toString()
-            viewModel.updateProfile(onSuccess = {
-//hideloading
-                findNavController().popBackStack()
-
-            }, edittextName = edittextName,
+            viewModel.updateProfile(
+                edittextName = edittextName,
                 edittextSurname = edittextSurname,
                 edittextGender = edittextGender,
                 onError = {
                     //hideloading
                     showToastMessage(it)
-                })
+                },
+                onSuccess = {
+//hideloading
+                    findNavController().popBackStack()
+
+                },
+            )
             //todo user bilgileri methoda paslanacak
         }
     }

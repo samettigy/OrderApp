@@ -19,9 +19,11 @@ import com.android.orderapp.databinding.FragmentSplashBinding
 import com.android.orderapp.ui.base.BaseFragment
 import com.android.orderapp.ui.base.FragmentInflate
 import com.android.orderapp.ui.fragments.splash.SplashViewModel
+import com.bumptech.glide.Glide
 import com.google.firebase.auth.FirebaseAuth
+import dagger.hilt.android.AndroidEntryPoint
 
-
+@AndroidEntryPoint
 class ProfileFragment : BaseFragment<ProfileViewModel, FragmentProfileBinding>() {
 
     private lateinit var firebaseAuth: FirebaseAuth
@@ -56,6 +58,20 @@ class ProfileFragment : BaseFragment<ProfileViewModel, FragmentProfileBinding>()
             findNavController().navigate(R.id.profileToChangePassword)
         }
 
+        viewModel.user.observe(viewLifecycleOwner) {
+            context?.let { it1 ->
+                Glide.with(it1)
+                    .load(it?.profileImageUrl)
+                    .placeholder(R.drawable.ic_pp)
+                    .into(binding.profileImg)
+            }
+        }
+
+    }
+
+    override fun onResume() {
+        super.onResume()
+        viewModel.getUser()
     }
 
 

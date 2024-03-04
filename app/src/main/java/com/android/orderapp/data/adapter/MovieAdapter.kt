@@ -11,7 +11,8 @@ import com.android.orderapp.data.model.MovieModel
 import com.bumptech.glide.Glide
 
 class MovieAdapter(
-    var moviesList : ArrayList<MovieModel>
+    var moviesList : ArrayList<MovieModel>,
+    private val IMAGE_BASE: String = "https://image.tmdb.org/t/p/w500/"
 ) : RecyclerView.Adapter<MovieAdapter.MovieViewHolder>() {
 
     class MovieViewHolder(var view : View) : RecyclerView.ViewHolder(view) {
@@ -32,8 +33,9 @@ class MovieAdapter(
     override fun onBindViewHolder(holder: MovieViewHolder, position: Int) {
         val currentItem = moviesList[position]
 
-        Glide.with(holder.itemView.context)
-            .load(currentItem.posterPath)
+
+        Glide.with(holder.itemView)
+            .load(IMAGE_BASE + currentItem.posterPath)
             .into(holder.moviePoster)
 
         holder.movieTitle.text = currentItem.title

@@ -30,6 +30,7 @@ class EditProfileViewModel @Inject constructor(
     val screenState: LiveData<EditProfileScreenState> = _screenState
     private val docRef = fireStore.collection("users").document("${firebaseAuth.uid}")
     var selectedImg: Uri? = null
+    var user : UserInfo? = null
 
     init {
         getUser()
@@ -39,15 +40,10 @@ class EditProfileViewModel @Inject constructor(
         _screenState.value = EditProfileScreenState.Loading
         docRef.get().addOnSuccessListener { document ->
             if (document != null) {
-                _screenState.value = EditProfileScreenState.Content(
-                    UserInfo(
-                        profileImageUrl = document.getString("profileImageUrl").orEmpty(),
-                        email = document.getString("email").orEmpty(),
-                        name = document.getString("name").orEmpty(),
-                        surname = document.getString("surname").orEmpty(),
-                        gender = document.getString("gender").orEmpty()
-                    )
-                )
+                _screenState.value = document.toObject(UserInfo::class.java)?.let {
+                    user = it
+                    EditProfileScreenState.Content(it)
+                }
             } else {
                 _screenState.value = EditProfileScreenState.Error("User bulunamadi")
             }
@@ -78,9 +74,10 @@ class EditProfileViewModel @Inject constructor(
         edittextSurname: String,
         edittextGender: String, onSuccess: () -> Unit, onError: (message: String) -> Unit
     ) {
+        showLoadingDialog()
         if (selectedImg == null) {
             saveUser(
-                urlPhoto = null,
+                urlPhoto = user?.profileImageUrl,
                 edittextName,
                 edittextSurname,
                 edittextGender,
@@ -108,6 +105,7 @@ class EditProfileViewModel @Inject constructor(
             }
             .addOnFailureListener { e ->
                 onError(e.message ?: "Dosya yüklenirken bir hata oluştu")
+                hideLoadingDialog()
             }
     }
 
@@ -124,7 +122,7 @@ class EditProfileViewModel @Inject constructor(
             "name" to edittextName,
             "surname" to edittextSurname,
             "gender" to edittextGender,
-            "profileImageUrl" to (urlPhoto ?: "")
+            "profileImageUrl" to (urlPhoto.orEmpty())
         )
 
         docRef.update(newData)
@@ -133,9 +131,11 @@ class EditProfileViewModel @Inject constructor(
                     ContentValues.TAG,
                     "Belge başarıyla güncellendi!"
                 )
+                hideLoadingDialog()
                 onSuccess()
             }
             .addOnFailureListener { e ->
+                hideLoadingDialog()
                 Log.w(ContentValues.TAG, "Hata oluştu: ", e)
                 onError(e.message ?: "Bir hata oluştu")
             }

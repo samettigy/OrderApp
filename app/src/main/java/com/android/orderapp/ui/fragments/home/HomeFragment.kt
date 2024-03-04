@@ -4,6 +4,7 @@ import android.app.AlertDialog
 import android.os.Bundle
 import android.view.KeyEvent
 import android.view.View
+import androidx.appcompat.widget.SearchView
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
@@ -27,6 +28,32 @@ class HomeFragment : BaseFragment<HomeViewModel, FragmentHomeBinding>() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+
+        /*
+        binding.searchView.setOnQueryTextListener(object : android.widget.SearchView.OnQueryTextListener {
+            override fun onQueryTextSubmit(query: String?): Boolean {
+                binding.searchView.clearFocus()
+                val filteredMovies = viewModel.movieList.value?.filter {
+                    it.title!!.contains(query ?: "",ignoreCase = true)
+                }
+                adapter.moviesList.clear()
+                adapter.moviesList.addAll(filteredMovies ?: emptyList())
+                adapter.notifyDataSetChanged()
+                return true
+            }
+
+            override fun onQueryTextChange(newText: String?): Boolean {
+                val filteredMovies = viewModel.movieList.value?.filter {
+                    it.title!!.contains(newText ?: "",ignoreCase = true)
+                }
+                adapter.moviesList.clear()
+                adapter.moviesList.addAll(filteredMovies ?: emptyList())
+                adapter.notifyDataSetChanged()
+                return true
+            }
+        })
+
+         */
 
 
         val recyclerView = binding.rvMovieList

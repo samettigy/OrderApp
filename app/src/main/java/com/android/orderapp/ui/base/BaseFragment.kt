@@ -12,10 +12,13 @@ import android.view.ViewGroup
 import android.widget.ProgressBar
 import android.widget.Toast
 import androidx.fragment.app.Fragment
+import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.lifecycleScope
+import androidx.lifecycle.repeatOnLifecycle
 import androidx.viewbinding.ViewBinding
 import com.android.orderapp.R
+import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch
 
@@ -30,7 +33,7 @@ abstract class BaseFragment<VM : BaseViewModel, VB : ViewBinding> : Fragment() {
 
     abstract val viewModel: VM
 
-    private var progressBar: ProgressDialog? = null
+    private var dialog: AlertDialog? = null
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -46,22 +49,33 @@ abstract class BaseFragment<VM : BaseViewModel, VB : ViewBinding> : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        viewLifecycleOwner.lifecycleScope.launch {
+            viewLifecycleOwner.lifecycle.repeatOnLifecycle(Lifecycle.State.STARTED) {
+                viewModel.loadingState.collect {
+                    if (it == LoadingState.SHOW) {
+                        showLoadingDialog()
+                    } else {
+                        hideLoadingDialog()
+                    }
+                }
+            }
+        }
 
     }
 
-    protected fun showLoadingDialog(activity: Activity) : AlertDialog {
-        val dialogView = LayoutInflater.from(activity).inflate(R.layout.loading_dialog,null)
-        val builder = AlertDialog.Builder(activity)
-        builder.setView(dialogView)
-        val dialog = builder.create()
-        dialog.show()
-        return dialog
+    private fun showLoadingDialog() {
+        if (dialog == null) {
+            val dialogView = LayoutInflater.from(activity).inflate(R.layout.loading_dialog, null)
+            val builder = AlertDialog.Builder(activity)
+            builder.setView(dialogView)
+            dialog = builder.create()
+        }
+        dialog?.show()
     }
 
-    open fun hideLoadingDialog(dialog: AlertDialog)  {
+    private fun hideLoadingDialog() {
         dialog?.dismiss()
     }
-
 
 
     open fun showToastMessage(message: String) {
