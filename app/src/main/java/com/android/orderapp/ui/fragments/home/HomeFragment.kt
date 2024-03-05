@@ -4,11 +4,11 @@ import android.app.AlertDialog
 import android.os.Bundle
 import android.view.KeyEvent
 import android.view.View
-import androidx.appcompat.widget.SearchView
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.Observer
-import androidx.lifecycle.ViewModelProvider
+import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.android.orderapp.R
 import com.android.orderapp.data.adapter.MovieAdapter
 import com.android.orderapp.data.model.MovieModel
 import com.android.orderapp.databinding.FragmentHomeBinding
@@ -23,7 +23,8 @@ class HomeFragment : BaseFragment<HomeViewModel, FragmentHomeBinding>() {
         get() = FragmentHomeBinding::inflate
 
 
-    private lateinit var adapter: MovieAdapter
+    private  var adapter: MovieAdapter? = null
+
 
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
@@ -58,12 +59,19 @@ class HomeFragment : BaseFragment<HomeViewModel, FragmentHomeBinding>() {
 
         val recyclerView = binding.rvMovieList
         recyclerView.layoutManager = LinearLayoutManager(requireContext())
-        adapter = MovieAdapter(ArrayList())
         recyclerView.adapter = adapter
 
         viewModel.movieList.observe(viewLifecycleOwner, Observer { movies ->
-            adapter.moviesList = movies as ArrayList<MovieModel>
-            adapter.notifyDataSetChanged()
+            if (adapter == null) {
+                adapter = MovieAdapter(movies as ArrayList<MovieModel>) { clickedMovie ->
+                    val moviePoster = clickedMovie.posterPath
+                    findNavController().navigate(R.id.detailFragment)
+                }
+                recyclerView.adapter = adapter
+            } else {
+                adapter?.moviesList = movies as ArrayList<MovieModel>
+                adapter?.notifyDataSetChanged()
+            }
         })
 
         viewModel.getMovies()

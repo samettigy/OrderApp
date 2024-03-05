@@ -5,7 +5,7 @@
     android:layout_height="match_parent"
     android:background="#AEBDCA"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    tools:context=".ui.fragments.DetailFragment">
+    tools:context=".ui.fragments.details.DetailFragment">
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/imgLayout"
@@ -79,30 +79,19 @@
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toTopOf="parent" />
 
-                <TextView
-                    android:id="@+id/tvMovieTagLine"
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:text="sub title"
-                    android:textAlignment="center"
-                    android:textColor="@color/white"
-                    android:textSize="12sp"
-                    android:textStyle="bold"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@+id/tvMovieTitle" />
+
 
                 <TextView
                     android:id="@+id/tvMovieInfo"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="15dp"
+                    android:layout_marginTop="30dp"
                     android:text="Movie Info :"
                     android:textColor="@color/white"
                     android:textSize="14sp"
                     android:textStyle="bold"
                     app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@+id/tvMovieTagLine" />
+                    app:layout_constraintTop_toBottomOf="@+id/tvMovieTitle" />
 
                 <TextView
                     android:id="@+id/tvMovieDateReleaseTitle"
