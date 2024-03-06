@@ -2,7 +2,6 @@ package com.android.orderapp.data.adapter
 
 import android.view.LayoutInflater
 import android.view.View
-import android.view.View.OnClickListener
 import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.TextView
@@ -14,16 +13,17 @@ import com.bumptech.glide.Glide
 
 class MovieAdapter(
     var moviesList: ArrayList<MovieModel>,
-    private val onItemClick: (MovieModel) -> Unit
+    private var onItemClick: (MovieModel) -> Unit
 ) : RecyclerView.Adapter<MovieAdapter.MovieViewHolder>() {
 
-
-    private val IMAGE_BASE: String = "https://image.tmdb.org/t/p/w500/"
+    private var imageBase: String = "https://image.tmdb.org/t/p/w500/"
 
     class MovieViewHolder(var view: View) : RecyclerView.ViewHolder(view) {
-        var moviePoster: ImageView = view.findViewById(R.id.moviePoster)
-        val movieTitle: TextView = view.findViewById(R.id.movieTitle)
-        val movieReleaseDate: TextView = view.findViewById(R.id.movieReleaseDate)
+        var moviePoster: ImageView = view.findViewById(R.id.imgMovie)
+        val movieTitle: TextView = view.findViewById(R.id.tvMovieName)
+        val movieRate: TextView = view.findViewById(R.id.tvRate)
+        val movieLang: TextView = view.findViewById(R.id.tvLang)
+        val movieReleaseDate: TextView = view.findViewById(R.id.tvMovieDateRelease)
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): MovieViewHolder {
@@ -43,9 +43,11 @@ class MovieAdapter(
         }
 
         Glide.with(holder.itemView)
-            .load(IMAGE_BASE + currentItem.posterPath)
+            .load(imageBase + currentItem.posterPath)
             .into(holder.moviePoster)
 
+        holder.movieRate.text = currentItem.voteAverage.toString()
+        holder.movieLang.text = currentItem.originalLanguage
         holder.movieTitle.text = currentItem.title
         holder.movieReleaseDate.text = currentItem.releaseDate
     }

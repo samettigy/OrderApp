@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@drawable/profilebkg"
+    android:background="@color/lavender"
     tools:context=".ui.fragments.profile.EditProfileFragment">
 
 
@@ -142,11 +142,12 @@
         android:id="@+id/updateButton"
         android:layout_width="wrap_content"
         android:layout_height="60dp"
-        android:backgroundTint="@color/lavender"
+        android:backgroundTint="@color/grey"
         android:gravity="center"
         android:text="Update"
         android:textSize="18sp"
         app:cornerRadius="20dp"
+        android:layout_marginBottom="100dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent" />

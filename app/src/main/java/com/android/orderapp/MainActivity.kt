@@ -48,6 +48,7 @@ class MainActivity : BaseActivity<MainViewModel, ActivityMainBinding>() {
                 R.id.forgotPasswordFragment -> false
                 R.id.splashFragment -> false
                 R.id.editProfileFragment -> false
+                R.id.detailFragment -> false
                 else -> true
             }
             binding.btmNavigation.visibility = if (showBottomNav) View.VISIBLE else View.GONE

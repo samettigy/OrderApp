@@ -1,10 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="#AEBDCA"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
     tools:context=".ui.fragments.details.DetailFragment">
 
     <androidx.constraintlayout.widget.ConstraintLayout
@@ -38,7 +38,8 @@
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
+            app:layout_constraintTop_toTopOf="parent"
+            app:shapeAppearanceOverlay="@style/OvalShape" />
     </androidx.constraintlayout.widget.ConstraintLayout>
 
 
@@ -47,8 +48,8 @@
         android:layout_width="match_parent"
         android:layout_height="0dp"
         android:layout_marginTop="-30dp"
-        android:background="@color/lavender"
-        android:padding="15dp"
+        android:background="@drawable/bg_details"
+        android:padding="20dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -73,7 +74,7 @@
                     android:text="movie"
                     android:textAlignment="center"
                     android:textColor="@color/white"
-                    android:textSize="18sp"
+                    android:textSize="24sp"
                     android:textStyle="bold"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
@@ -82,28 +83,17 @@
 
 
                 <TextView
-                    android:id="@+id/tvMovieInfo"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="30dp"
-                    android:text="Movie Info :"
-                    android:textColor="@color/white"
-                    android:textSize="14sp"
-                    android:textStyle="bold"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@+id/tvMovieTitle" />
-
-                <TextView
                     android:id="@+id/tvMovieDateReleaseTitle"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="5dp"
+                    android:layout_marginTop="30dp"
                     android:text="ReleaseDate: "
                     android:textColor="@color/white"
+                    app:layout_goneMarginTop="10dp"
                     android:textSize="12sp"
                     android:textStyle="bold"
                     app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@+id/tvMovieInfo" />
+                    app:layout_constraintTop_toBottomOf="@+id/tvMovieTitle" />
 
                 <TextView
                     android:id="@+id/tvMovieDateRelease"
@@ -136,68 +126,7 @@
                     app:layout_constraintBaseline_toBaselineOf="@+id/tvMovieRatingTitle"
                     app:layout_constraintStart_toEndOf="@+id/tvMovieRatingTitle" />
 
-                <TextView
-                    android:id="@+id/tvMovieRuntimeTitle"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="Runtime: "
-                    android:textColor="@color/white"
-                    android:textSize="12sp"
-                    android:textStyle="bold"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@id/tvMovieRatingTitle" />
 
-                <TextView
-                    android:id="@+id/tvMovieRuntime"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="2.3 hr"
-                    android:textColor="@color/white"
-                    android:textSize="12sp"
-                    app:layout_constraintBaseline_toBaselineOf="@+id/tvMovieRuntimeTitle"
-                    app:layout_constraintStart_toEndOf="@+id/tvMovieRuntimeTitle" />
-
-                <TextView
-                    android:id="@+id/tvMovieBudgetTitle"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="Budget: "
-                    android:textColor="@color/white"
-                    android:textSize="12sp"
-                    android:textStyle="bold"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@id/tvMovieRuntimeTitle" />
-
-                <TextView
-                    android:id="@+id/tvMovieBudget"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="130,000"
-                    android:textColor="@color/white"
-                    android:textSize="12sp"
-                    app:layout_constraintBaseline_toBaselineOf="@+id/tvMovieBudgetTitle"
-                    app:layout_constraintStart_toEndOf="@+id/tvMovieBudgetTitle" />
-
-                <TextView
-                    android:id="@+id/tvMovieRevenueTitle"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="Revenue: "
-                    android:textColor="@color/white"
-                    android:textSize="12sp"
-                    android:textStyle="bold"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@id/tvMovieBudgetTitle" />
-
-                <TextView
-                    android:id="@+id/tvMovieRevenue"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="130,000"
-                    android:textColor="@color/white"
-                    android:textSize="12sp"
-                    app:layout_constraintBaseline_toBaselineOf="@+id/tvMovieRevenueTitle"
-                    app:layout_constraintStart_toEndOf="@+id/tvMovieRevenueTitle" />
 
                 <TextView
                     android:id="@+id/tvMovieOverviewTitle"
@@ -205,21 +134,21 @@
                     android:layout_height="wrap_content"
                     android:layout_marginTop="5dp"
                     android:text="Overview :"
+                    android:textColor="@color/white"
                     android:textSize="12sp"
                     android:textStyle="bold"
                     app:layout_constraintStart_toStartOf="parent"
-                    android:textColor="@color/white"
-                    app:layout_constraintTop_toBottomOf="@id/tvMovieRevenueTitle" />
+                    app:layout_constraintTop_toBottomOf="@id/tvMovieRating" />
 
                 <TextView
                     android:id="@+id/tvMovieOverview"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="overview ........."
+                    android:textColor="@color/white"
                     android:textSize="12sp"
                     app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@id/tvMovieOverviewTitle"
-                    android:textColor="@color/white" />
+                    app:layout_constraintTop_toBottomOf="@id/tvMovieOverviewTitle" />
 
             </androidx.constraintlayout.widget.ConstraintLayout>
         </ScrollView>

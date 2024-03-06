@@ -4,6 +4,7 @@ import android.app.AlertDialog
 import android.os.Bundle
 import android.view.KeyEvent
 import android.view.View
+import androidx.core.os.bundleOf
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.Observer
 import androidx.navigation.fragment.findNavController
@@ -64,8 +65,8 @@ class HomeFragment : BaseFragment<HomeViewModel, FragmentHomeBinding>() {
         viewModel.movieList.observe(viewLifecycleOwner, Observer { movies ->
             if (adapter == null) {
                 adapter = MovieAdapter(movies as ArrayList<MovieModel>) { clickedMovie ->
-                    val moviePoster = clickedMovie.posterPath
-                    findNavController().navigate(R.id.detailFragment)
+                    val bundle = bundleOf("id" to clickedMovie.id)
+                    findNavController().navigate(R.id.detailFragment,bundle)
                 }
                 recyclerView.adapter = adapter
             } else {
