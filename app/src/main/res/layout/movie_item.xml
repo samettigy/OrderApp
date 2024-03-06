@@ -40,6 +40,16 @@
             app:layout_constraintTop_toTopOf="parent" />
 
         <ImageView
+            android:id="@+id/imgFav"
+            android:layout_width="20dp"
+            android:layout_height="20dp"
+            android:src="@drawable/ic_empty_fav"
+            android:layout_marginStart="-20dp"
+            app:layout_constraintStart_toEndOf="@id/tvMovieName"
+            app:layout_constraintTop_toTopOf="@+id/tvMovieName"
+            app:tint="@color/iconColor" />
+
+        <ImageView
             android:id="@+id/imgVote"
             android:layout_width="20dp"
             android:layout_height="20dp"
