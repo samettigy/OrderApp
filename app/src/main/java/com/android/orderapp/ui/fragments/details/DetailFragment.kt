@@ -5,6 +5,7 @@ import android.view.View
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.Observer
 import com.android.orderapp.databinding.FragmentDetailBinding
+import com.android.orderapp.di.imageBase
 import com.android.orderapp.ui.base.BaseFragment
 import com.android.orderapp.ui.base.FragmentInflate
 import com.bumptech.glide.Glide
@@ -20,7 +21,6 @@ class DetailFragment : BaseFragment<DetailViewModel, FragmentDetailBinding>() {
         get() = FragmentDetailBinding::inflate
 
     private var movieId: Int? = null
-    private var imageBase: String = "https://image.tmdb.org/t/p/w500/"
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)

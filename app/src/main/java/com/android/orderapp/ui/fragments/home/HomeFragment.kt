@@ -4,6 +4,7 @@ import android.app.AlertDialog
 import android.os.Bundle
 import android.view.KeyEvent
 import android.view.View
+import android.widget.CheckBox
 import androidx.core.os.bundleOf
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.Observer
@@ -11,6 +12,7 @@ import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.android.orderapp.R
 import com.android.orderapp.data.adapter.MovieAdapter
+import com.android.orderapp.data.adapter.MovieAdapterInteraction
 import com.android.orderapp.data.model.MovieModel
 import com.android.orderapp.databinding.FragmentHomeBinding
 import com.android.orderapp.ui.base.BaseFragment
@@ -18,18 +20,16 @@ import com.android.orderapp.ui.base.FragmentInflate
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
-class HomeFragment : BaseFragment<HomeViewModel, FragmentHomeBinding>() {
+class HomeFragment : BaseFragment<HomeViewModel, FragmentHomeBinding>(), MovieAdapterInteraction {
     override val viewModel: HomeViewModel by viewModels()
     override val viewBindingInflater: FragmentInflate<FragmentHomeBinding>
         get() = FragmentHomeBinding::inflate
 
-
-    private  var adapter: MovieAdapter? = null
-
-
+    private var adapter: MovieAdapter? = null
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+
 
         /*
         binding.searchView.setOnQueryTextListener(object : android.widget.SearchView.OnQueryTextListener {
@@ -64,10 +64,7 @@ class HomeFragment : BaseFragment<HomeViewModel, FragmentHomeBinding>() {
 
         viewModel.movieList.observe(viewLifecycleOwner, Observer { movies ->
             if (adapter == null) {
-                adapter = MovieAdapter(movies as ArrayList<MovieModel>) { clickedMovie ->
-                    val bundle = bundleOf("id" to clickedMovie.id)
-                    findNavController().navigate(R.id.detailFragment,bundle)
-                }
+                adapter = MovieAdapter(movies as ArrayList<MovieModel>, this)
                 recyclerView.adapter = adapter
             } else {
                 adapter?.moviesList = movies as ArrayList<MovieModel>
@@ -76,7 +73,6 @@ class HomeFragment : BaseFragment<HomeViewModel, FragmentHomeBinding>() {
         })
 
         viewModel.getMovies()
-
 
         view.isFocusableInTouchMode = true
         view.requestFocus()
@@ -101,5 +97,12 @@ class HomeFragment : BaseFragment<HomeViewModel, FragmentHomeBinding>() {
 
     }
 
+    override fun onFavoriteClick(movie: MovieModel, isChecked: Boolean) {
+        viewModel.updateFavoriteStatus(movie,isChecked)
+    }
 
+    override fun onItemClick(itemId: String) {
+        val bundle = bundleOf("id" to itemId)
+        findNavController().navigate(R.id.detailFragment, bundle)
+    }
 }

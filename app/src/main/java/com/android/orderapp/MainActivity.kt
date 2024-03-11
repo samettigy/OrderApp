@@ -6,6 +6,8 @@ import android.os.Handler
 import android.os.Looper
 import android.util.AttributeSet
 import android.view.View
+import android.widget.CheckBox
+import android.widget.Toast
 import androidx.activity.viewModels
 import androidx.core.splashscreen.SplashScreen.Companion.installSplashScreen
 import androidx.navigation.findNavController
@@ -29,10 +31,29 @@ class MainActivity : BaseActivity<MainViewModel, ActivityMainBinding>() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         createBottomNavigation()
-
-
+       // checkboxChange()
 
     }
+
+
+    /*
+    private fun checkboxChange() {
+
+        var cbFav = findViewById<CheckBox>(R.id.cbFav)
+
+        cbFav.setOnCheckedChangeListener { checkbox, isChecked ->
+
+            if (isChecked) {
+                showToast("Item added to Favorites")
+            } else {
+                showToast("Item removed from Favorites")
+            }
+
+        }
+
+    }
+
+     */
 
 
     private fun createBottomNavigation() {
@@ -54,6 +75,13 @@ class MainActivity : BaseActivity<MainViewModel, ActivityMainBinding>() {
             binding.btmNavigation.visibility = if (showBottomNav) View.VISIBLE else View.GONE
         }
     }
+
+    /*
+    private fun showToast(str: String) {
+        Toast.makeText(this, "str", Toast.LENGTH_SHORT)
+    }
+
+     */
 
 
 }

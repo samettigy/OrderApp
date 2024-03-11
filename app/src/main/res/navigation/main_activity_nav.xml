@@ -74,7 +74,7 @@
         tools:layout="@layout/fragment_detail" />
     <fragment
         android:id="@+id/favoritesFragment"
-        android:name="com.android.orderapp.ui.fragments.FavoritesFragment"
+        android:name="com.android.orderapp.ui.fragments.favorite.FavoritesFragment"
         android:label="fragment_favorites"
         tools:layout="@layout/fragment_favorites" />
     <fragment

@@ -15,4 +15,5 @@ class MoviesRepositoryImpl @Inject constructor(
     override suspend fun getMovieDetailsById(movieId: Int): Result<MovieModel> = safeApiCall {
         tmdbApiService.getMovieDetailsById(id = movieId)
     }
+
 }

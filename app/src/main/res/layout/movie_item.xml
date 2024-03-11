@@ -39,15 +39,15 @@
             app:layout_constraintStart_toStartOf="@+id/guideline2"
             app:layout_constraintTop_toTopOf="parent" />
 
-        <ImageView
-            android:id="@+id/imgFav"
+        <CheckBox
+            android:id="@+id/cbFav"
             android:layout_width="20dp"
             android:layout_height="20dp"
-            android:src="@drawable/ic_empty_fav"
+            android:button="@drawable/selector_favorites_item"
             android:layout_marginStart="-20dp"
+            app:useMaterialThemeColors="false"
             app:layout_constraintStart_toEndOf="@id/tvMovieName"
-            app:layout_constraintTop_toTopOf="@+id/tvMovieName"
-            app:tint="@color/iconColor" />
+            app:layout_constraintTop_toTopOf="@+id/tvMovieName"/>
 
         <ImageView
             android:id="@+id/imgVote"

@@ -19,7 +19,6 @@ class DetailViewModel @Inject constructor(
     private val _movieDetails = MutableLiveData<MovieModel>()
     val movieDetails: LiveData<MovieModel> = _movieDetails
 
-
     fun getMovieDetailsById(movieId: Int) = viewModelScope.launch {
         moviesRepository.getMovieDetailsById(movieId).onSuccess {
             _movieDetails.value = it

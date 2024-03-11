@@ -9,47 +9,47 @@ import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.android.orderapp.R
 import com.android.orderapp.data.model.MovieModel
-import com.android.orderapp.di.imageBase
 import com.bumptech.glide.Glide
 
-interface MovieAdapterInteraction {
-    fun onFavoriteClick(movie: MovieModel, isChecked: Boolean)
+interface FavoritesAdapterInteraction {
+    fun onFavoriteClick(movie: MovieModel, isChecked: Boolean, itemId: String)
     fun onItemClick(itemId: String)
 }
 
-class MovieAdapter(
-    var moviesList: List<MovieModel>,
-    private val interaction: MovieAdapterInteraction
-) : RecyclerView.Adapter<MovieAdapter.MovieViewHolder>() {
+class FavoritesAdapter(
+    var favMovieList : ArrayList<MovieModel>,
+    private val interaction: FavoritesAdapterInteraction
+) : RecyclerView.Adapter<FavoritesAdapter.FavoritesViewHolder>() {
 
+    private var imageBase: String = "https://image.tmdb.org/t/p/w500/"
 
-    class MovieViewHolder(var view: View) : RecyclerView.ViewHolder(view) {
-        var moviePoster: ImageView = view.findViewById(R.id.imgMovie)
+    class FavoritesViewHolder(var view : View) : RecyclerView.ViewHolder(view) {
+        var moviePoster : ImageView = view.findViewById(R.id.imgMovie)
         val movieTitle: TextView = view.findViewById(R.id.tvMovieName)
         val movieRate: TextView = view.findViewById(R.id.tvRate)
         val movieLang: TextView = view.findViewById(R.id.tvLang)
         val movieReleaseDate: TextView = view.findViewById(R.id.tvMovieDateRelease)
-        val cbFav: CheckBox = view.findViewById(R.id.cbFav)
+        val cbFav : CheckBox = view.findViewById(R.id.cbFav)
     }
 
-    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): MovieViewHolder {
-        val view = LayoutInflater.from(parent.context).inflate(R.layout.movie_item, parent, false)
-        return MovieViewHolder(view)
+    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): FavoritesViewHolder {
+        val view = LayoutInflater.from(parent.context).inflate(R.layout.movie_item,parent,false)
+        return FavoritesViewHolder(view)
     }
 
     override fun getItemCount(): Int {
-        return moviesList.size
+        return favMovieList.size
     }
 
-    override fun onBindViewHolder(holder: MovieViewHolder, position: Int) {
-        val currentItem = moviesList[position]
+    override fun onBindViewHolder(holder: FavoritesViewHolder, position: Int) {
+        val currentItem = favMovieList[position]
 
         holder.itemView.setOnClickListener {
             interaction.onItemClick(currentItem.id.toString())
         }
 
         holder.cbFav.setOnCheckedChangeListener { buttonView, isChecked ->
-            interaction.onFavoriteClick(currentItem, isChecked)
+            interaction.onFavoriteClick(currentItem, isChecked, itemId = currentItem.id.toString())
         }
 
         Glide.with(holder.itemView)
@@ -60,6 +60,7 @@ class MovieAdapter(
         holder.movieLang.text = currentItem.originalLanguage
         holder.movieTitle.text = currentItem.title
         holder.movieReleaseDate.text = currentItem.releaseDate
+
     }
 
 }

@@ -62,3 +62,5 @@ object MovieServiceModule {
             .create(TMDBApiService::class.java)
     }
 }
+
+const val imageBase: String = "https://image.tmdb.org/t/p/w500/"
