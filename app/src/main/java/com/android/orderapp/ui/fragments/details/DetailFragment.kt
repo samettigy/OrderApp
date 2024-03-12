@@ -20,13 +20,13 @@ class DetailFragment : BaseFragment<DetailViewModel, FragmentDetailBinding>() {
     override val viewBindingInflater: FragmentInflate<FragmentDetailBinding>
         get() = FragmentDetailBinding::inflate
 
-    private var movieId: Int? = null
+
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        movieId = arguments?.getInt("id")
-        movieId?.let { viewModel.getMovieDetailsById(it) }
+        val movieId = arguments?.getString("id")
+        movieId?.let { viewModel.getMovieDetailsById(it.toInt()) }
 
         viewModel.movieDetails.observe(viewLifecycleOwner, Observer { movieDetails ->
 

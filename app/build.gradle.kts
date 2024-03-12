@@ -45,6 +45,7 @@ android {
 
 dependencies {
 
+    implementation("com.github.travijuu:numberpicker:1.0.7")
     //Image loading
     implementation("io.coil-kt:coil:1.4.0")
     //paging

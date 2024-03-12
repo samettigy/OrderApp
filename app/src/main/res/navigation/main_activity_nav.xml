@@ -64,7 +64,7 @@
         tools:layout="@layout/fragment_home" />
     <fragment
         android:id="@+id/cartFragment"
-        android:name="com.android.orderapp.ui.fragments.CartFragment"
+        android:name="com.android.orderapp.ui.fragments.cart.CartFragment"
         android:label="fragment_cart"
         tools:layout="@layout/fragment_cart" />
     <fragment
