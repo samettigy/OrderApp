@@ -29,11 +29,11 @@ class DetailFragment : BaseFragment<DetailViewModel, FragmentDetailBinding>() {
 
 
         val movieId = arguments?.getString("id")
-
+        movieId?.let { viewModel.getMovieDetailsById(it.toInt()) }
 
 
         binding.btnAddToCart.setOnClickListener {
-            movieId?.let { viewModel.getMovieDetailsById(it.toInt()) }
+            viewModel.getMovieDetailsById(movieId!!.toInt())
         }
 
 

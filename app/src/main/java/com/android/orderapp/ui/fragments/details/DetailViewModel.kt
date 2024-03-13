@@ -29,11 +29,11 @@ class DetailViewModel @Inject constructor(
     private val _movieDetails = MutableLiveData<MovieModel>()
     val movieDetails: LiveData<MovieModel> = _movieDetails
     val currentUser = firebaseAuth.currentUser?.uid
-    val docRef = firebaseFirestore.collection("favorites").document("$currentUser")
+    val docRef = firebaseFirestore.collection("baskets").document("$currentUser")
 
     fun getMovieDetailsById(movieId: Int) = viewModelScope.launch {
-        moviesRepository.getMovieDetailsById(movieId).onSuccess {
-            _movieDetails.value = it
+        moviesRepository.getMovieDetailsById(movieId).onSuccess { movie ->
+            _movieDetails.value = movie
 
             val list: ArrayList<String> = arrayListOf()
 
@@ -44,21 +44,20 @@ class DetailViewModel @Inject constructor(
                     docRef.set(BasketInfo(items = listOf()))
                 }
 
-                var movieString = gson.toJson(it)
+                var movieString = gson.toJson(movie)
                 if (list.contains(movieString)) {
                     Log.d("eklendi", "başarılı")
                 } else {
                     list.add(movieString)
+                    docRef.update("items", list)
                 }
-
-                docRef.update("items", list)
-
+            }.addOnFailureListener {
+                Log.e("addToCart", "Film sepete eklenirken hata oluştu: $it")
             }
         }.onFailure {
             Log.d("movies-test", "HomeViewModel.getMovies.Error ${it.message}")
         }
     }
-
 
 
     /*
