@@ -17,6 +17,8 @@ import com.android.orderapp.data.model.MovieModel
 import com.android.orderapp.databinding.FragmentHomeBinding
 import com.android.orderapp.ui.base.BaseFragment
 import com.android.orderapp.ui.base.FragmentInflate
+import com.android.orderapp.ui.fragments.details.DetailFragment
+import com.google.gson.Gson
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
@@ -96,6 +98,7 @@ class HomeFragment : BaseFragment<HomeViewModel, FragmentHomeBinding>(), MovieAd
 
 
     }
+
 
     override fun onFavoriteClick(movie: MovieModel, isChecked: Boolean) {
         viewModel.updateFavoriteStatus(movie,isChecked)

@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="#AEBDCA"
+    android:background="@color/light_lavender"
     tools:context=".ui.fragments.details.DetailFragment">
 
     <androidx.constraintlayout.widget.ConstraintLayout
@@ -26,6 +26,18 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
+
+        <CheckBox
+            android:id="@+id/cbFav"
+            android:layout_width="30dp"
+            android:layout_height="30dp"
+            android:layout_marginStart="-50dp"
+            android:layout_marginTop="30dp"
+            android:background="@drawable/rounded_button"
+            android:button="@drawable/selector_favorites_item"
+            app:layout_constraintStart_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:useMaterialThemeColors="false" />
 
         <com.google.android.material.imageview.ShapeableImageView
             android:id="@+id/imgMovie"
@@ -80,7 +92,29 @@
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toTopOf="parent" />
 
+                <TextView
+                    android:id="@+id/txtPrice"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginEnd="20dp"
+                    android:text="3"
+                    android:textAlignment="center"
+                    android:textColor="@color/white"
+                    android:textSize="24sp"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
 
+                <TextView
+                    android:id="@+id/txtMoneyLogo"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="₺"
+                    android:textAlignment="center"
+                    android:textColor="@color/white"
+                    android:textSize="24sp"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toEndOf="@+id/txtPrice"
+                    app:layout_constraintTop_toTopOf="parent" />
 
                 <TextView
                     android:id="@+id/tvMovieDateReleaseTitle"
@@ -89,11 +123,11 @@
                     android:layout_marginTop="30dp"
                     android:text="ReleaseDate: "
                     android:textColor="@color/white"
-                    app:layout_goneMarginTop="10dp"
                     android:textSize="12sp"
                     android:textStyle="bold"
                     app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@+id/tvMovieTitle" />
+                    app:layout_constraintTop_toBottomOf="@+id/tvMovieTitle"
+                    app:layout_goneMarginTop="10dp" />
 
                 <TextView
                     android:id="@+id/tvMovieDateRelease"
@@ -127,7 +161,6 @@
                     app:layout_constraintStart_toEndOf="@+id/tvMovieRatingTitle" />
 
 
-
                 <TextView
                     android:id="@+id/tvMovieOverviewTitle"
                     android:layout_width="wrap_content"
@@ -152,6 +185,16 @@
 
             </androidx.constraintlayout.widget.ConstraintLayout>
         </ScrollView>
+
+        <Button
+            android:id="@+id/btnAddToCart"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:backgroundTint="@color/light_lavender"
+            android:text="ADD TO CART"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"></Button>
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 

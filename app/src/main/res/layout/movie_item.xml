@@ -118,6 +118,33 @@
             app:layout_constraintStart_toEndOf="@+id/imgDate"
             app:layout_constraintTop_toTopOf="@+id/imgDate" />
 
+        <TextView
+            android:id="@+id/txtPrice"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="3"
+            android:layout_marginEnd="25dp"
+            android:textAlignment="center"
+            android:textColor="@color/black"
+            android:textSize="18sp"
+            android:layout_marginBottom="22dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintBottom_toBottomOf="parent" />
+
+        <TextView
+            android:id="@+id/txtMoneyLogo"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="₺"
+            android:textAlignment="center"
+            app:layout_constraintStart_toEndOf="@+id/txtPrice"
+            android:textColor="@color/black"
+            android:layout_marginEnd="10dp"
+            android:layout_marginBottom="22dp"
+            android:textSize="18sp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintBottom_toBottomOf="parent" />
+
     </androidx.constraintlayout.widget.ConstraintLayout>
 
 

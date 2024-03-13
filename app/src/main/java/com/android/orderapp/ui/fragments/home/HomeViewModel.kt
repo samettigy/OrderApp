@@ -72,11 +72,6 @@ class HomeViewModel @Inject constructor(
             Log.e("lif", "$it")
         }
 
-        /**
-         * docReften varolan favori listesi alınacak,
-         * bu listenin sonuna
-         * kaydederken gson kütüphanesi ile jsona dönüştürlecek
-         * */
     }
 
 }
