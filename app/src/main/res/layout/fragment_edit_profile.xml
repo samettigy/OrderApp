@@ -4,14 +4,28 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/lavender"
+    android:background="@color/light_lavender"
     tools:context=".ui.fragments.profile.EditProfileFragment">
 
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Edit profile"
+        android:textColor="@color/white"
+        android:textSize="20sp"
+        app:layout_constraintBottom_toTopOf="@+id/profileImg"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent">
+
+    </TextView>
 
     <de.hdodenhof.circleimageview.CircleImageView
         android:id="@+id/profileImg"
         android:layout_width="200dp"
         android:layout_height="120dp"
+        android:layout_marginTop="60dp"
         android:src="@drawable/ic_pp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -142,7 +156,7 @@
         android:id="@+id/updateButton"
         android:layout_width="wrap_content"
         android:layout_height="60dp"
-        android:backgroundTint="@color/grey"
+        android:backgroundTint="@color/lavender"
         android:gravity="center"
         android:text="Update"
         android:textSize="18sp"

@@ -94,6 +94,9 @@
         <action
             android:id="@+id/profileToChangePassword"
             app:destination="@id/changePasswordFragment" />
+        <action
+            android:id="@+id/profileToLibraries"
+            app:destination="@id/libraryFragment" />
     </fragment>
     <fragment
         android:id="@+id/editProfileFragment"
@@ -109,4 +112,9 @@
         android:name="com.android.orderapp.ui.fragments.profile.ChangePasswordFragment"
         android:label="fragment_change_password"
         tools:layout="@layout/fragment_change_password" />
+    <fragment
+        android:id="@+id/libraryFragment"
+        android:name="com.android.orderapp.ui.fragments.libraries.LibraryFragment"
+        android:label="fragment_library"
+        tools:layout="@layout/fragment_library" />
 </navigation>
