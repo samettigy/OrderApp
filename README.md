@@ -18,14 +18,8 @@
 
 ## Screenshots
 
-| Intro Screen | Login Screen | Register Screen | Forget Password Screen |
+| Login Screen | Home Screen | Detail Screen | Favorite Screen |
 | ----------- | ----------- | ---------------- | ---------------- |
-| ![Login Screen](https://github.com/samettigy/OrderApp/blob/main/loginscreen.png)) | ![Login Screen](LİNK) | ![Register Screen](LİNK) | ![Forget Password Screen](LİNK) |
-| Homepage Screen | Filter Screen | Food Detail Screen | Search Screen |
-| ![Homepage Screen](LİNK) | ![Filter Screen](LİNK) | ![Food Detail Screen](LİNK) | ![Search Screen](LİNK) |
-| Cart Screen | Favourite Screen | Profile Screen | Order Screen |
-| ![Cart Screen](LİNK) | ![Favourite Screen](LİNK) | ![Profile Screen](LİNK) | ![Order Screen](LİNK) |
-| Complete Order Screen | Following Order Screen | Edit Profile Screen | User Addresses Screen |
-| ![Complete Order Screen](LİNK) | ![Following Order](LİNK) | ![Edit Profile](LİNK) | ![User Addresses Screen](LİNK) |
-| User Orders Screen | User Payment Details Screen | Delete User Screen | 
-| ![User Orders Screen](LİNK) | ![User Payment Details](LİNK) | ![Delete User Screen](LİNK) | 
+| ![Login Screen](https://github.com/samettigy/OrderApp/blob/main/loginscreen.png)) | ![Home Screen](https://github.com/samettigy/OrderApp/blob/main/homeScreen.png)) | ![Detail Screen](https://github.com/samettigy/OrderApp/blob/main/detailScreen.png) | ![Favorite Screen](https://github.com/samettigy/OrderApp/blob/main/FavoriteScreen.png) |
+| Cart Screen | Profile Screen | Food Detail Screen | Search Screen |
+| ![Cart Screen](https://github.com/samettigy/OrderApp/blob/main/cartScreen.png) | ![Profile Screen](https://github.com/samettigy/OrderApp/blob/main/ProfileScreen.png) 
