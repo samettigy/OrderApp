@@ -11,6 +11,8 @@ import androidx.lifecycle.Observer
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.android.orderapp.R
+import com.android.orderapp.data.adapter.CartAdapter
+import com.android.orderapp.data.adapter.CartAdapterInteraction
 import com.android.orderapp.data.adapter.MovieAdapter
 import com.android.orderapp.data.adapter.MovieAdapterInteraction
 import com.android.orderapp.data.model.MovieModel
@@ -21,16 +23,24 @@ import com.android.orderapp.ui.fragments.favorite.FavoritesScreenState
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
-class CartFragment : BaseFragment<CartViewModel, FragmentCartBinding>(), MovieAdapterInteraction {
+class CartFragment : BaseFragment<CartViewModel, FragmentCartBinding>(), CartAdapterInteraction {
 
     override val viewModel: CartViewModel by viewModels()
     override val viewBindingInflater: FragmentInflate<FragmentCartBinding>
         get() = FragmentCartBinding::inflate
 
-    private var adapter: MovieAdapter? = null
+    private var adapter: CartAdapter? = null
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+
+        val movieId = arguments?.getString("id")
+
+        binding.btnPayment.setOnClickListener {
+            viewModel.getMovieDetailsByIdAndUpdateLibraries(viewModel.movieDetails as List<String>)
+            val bundle = bundleOf("id" to movieId)
+            findNavController().navigate(R.id.libraryFragment, bundle)
+        }
 
 
         viewModel.screenState.observe(viewLifecycleOwner, Observer { screenState ->
@@ -38,7 +48,7 @@ class CartFragment : BaseFragment<CartViewModel, FragmentCartBinding>(), MovieAd
                 is BasketsScreenState.Content -> {
                     binding.contentView.visibility = View.VISIBLE
                     binding.loadingView.visibility = View.GONE
-                    adapter = MovieAdapter(screenState.movies, this)
+                    adapter = CartAdapter(screenState.movies, this)
                     val recyclerView = binding.rvCartList
                     recyclerView.layoutManager = LinearLayoutManager(requireContext())
                     recyclerView.adapter = adapter
@@ -60,7 +70,8 @@ class CartFragment : BaseFragment<CartViewModel, FragmentCartBinding>(), MovieAd
 
     }
 
-    override fun onFavoriteClick(movie: MovieModel, isChecked: Boolean) {
+
+    override fun onFavoriteClick(movie: MovieModel, isChecked: Boolean, itemId: String) {
 
     }
 

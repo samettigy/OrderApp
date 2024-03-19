@@ -76,7 +76,7 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Placeholder"
+                android:text="6₺"
                 android:layout_marginTop="20dp"
                 android:layout_marginEnd="10dp"
                 android:textSize="24sp"
@@ -88,12 +88,13 @@
 
             <Button
                 android:id="@+id/btnPayment"
-                android:layout_width="250dp"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="PAYMENT"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintBottom_toBottomOf="parent"
                 android:layout_marginBottom="10dp"
+                android:layout_marginHorizontal="10dp"
                 android:backgroundTint="#AEBDCA">
 
             </Button>

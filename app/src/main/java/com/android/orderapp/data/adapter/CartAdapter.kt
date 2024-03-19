@@ -11,15 +11,15 @@ import com.android.orderapp.R
 import com.android.orderapp.data.model.MovieModel
 import com.bumptech.glide.Glide
 
-interface FavoritesAdapterInteraction {
+interface CartAdapterInteraction {
     fun onFavoriteClick(movie: MovieModel, isChecked: Boolean, itemId: String)
     fun onItemClick(itemId: String)
 }
 
-class FavoritesAdapter(
-    var favMovieList : ArrayList<MovieModel>,
-    private val interaction: FavoritesAdapterInteraction
-) : RecyclerView.Adapter<FavoritesAdapter.FavoritesViewHolder>() {
+class CartAdapter(
+    var cartMovieList : List<MovieModel>,
+    private val interaction: CartAdapterInteraction
+) : RecyclerView.Adapter<CartAdapter.FavoritesViewHolder>() {
 
     private var imageBase: String = "https://image.tmdb.org/t/p/w500/"
 
@@ -29,26 +29,26 @@ class FavoritesAdapter(
         val movieRate: TextView = view.findViewById(R.id.tvRate)
         val movieLang: TextView = view.findViewById(R.id.tvLang)
         val movieReleaseDate: TextView = view.findViewById(R.id.tvMovieDateRelease)
-        val cbFav : CheckBox = view.findViewById(R.id.cbFav)
+        val cbDelete : CheckBox = view.findViewById(R.id.cbDelete)
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): FavoritesViewHolder {
-        val view = LayoutInflater.from(parent.context).inflate(R.layout.movie_item,parent,false)
+        val view = LayoutInflater.from(parent.context).inflate(R.layout.movie_item_basket,parent,false)
         return FavoritesViewHolder(view)
     }
 
     override fun getItemCount(): Int {
-        return favMovieList.size
+        return cartMovieList.size
     }
 
     override fun onBindViewHolder(holder: FavoritesViewHolder, position: Int) {
-        val currentItem = favMovieList[position]
+        val currentItem = cartMovieList[position]
 
         holder.itemView.setOnClickListener {
             interaction.onItemClick(currentItem.id.toString())
         }
 
-        holder.cbFav.setOnCheckedChangeListener { buttonView, isChecked ->
+        holder.cbDelete.setOnCheckedChangeListener { buttonView, isChecked ->
             interaction.onFavoriteClick(currentItem, isChecked, itemId = currentItem.id.toString())
         }
 

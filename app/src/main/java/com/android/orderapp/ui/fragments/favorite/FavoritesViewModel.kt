@@ -4,6 +4,10 @@ import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
+import androidx.recyclerview.widget.RecyclerView
+import androidx.recyclerview.widget.RecyclerView.Adapter
+import com.android.orderapp.data.adapter.MovieAdapter
+import com.android.orderapp.data.adapter.MovieAdapterInteraction
 import com.android.orderapp.data.model.FavInfo
 import com.android.orderapp.data.model.MovieModel
 import com.android.orderapp.data.model.UserInfo
@@ -21,6 +25,8 @@ class FavoritesViewModel @Inject constructor(
     private val firebaseAuth: FirebaseAuth,
     private val firebaseFirestore: FirebaseFirestore
 ) : BaseViewModel() {
+
+
 
     private val _screenState =
         MutableLiveData<FavoritesScreenState>(FavoritesScreenState.Loading)
@@ -63,6 +69,7 @@ class FavoritesViewModel @Inject constructor(
 
             favoritesList.remove(movieString)
             docRef.update("items", favoritesList)
+
         }
     }
 

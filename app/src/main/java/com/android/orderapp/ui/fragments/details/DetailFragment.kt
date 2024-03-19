@@ -3,8 +3,11 @@ package com.android.orderapp.ui.fragments.details
 import android.os.Bundle
 import android.util.Log
 import android.view.View
+import androidx.core.os.bundleOf
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.Observer
+import androidx.navigation.fragment.findNavController
+import com.android.orderapp.R
 import com.android.orderapp.data.model.MovieModel
 import com.android.orderapp.databinding.FragmentDetailBinding
 import com.android.orderapp.di.imageBase
@@ -29,11 +32,13 @@ class DetailFragment : BaseFragment<DetailViewModel, FragmentDetailBinding>() {
 
 
         val movieId = arguments?.getString("id")
-        movieId?.let { viewModel.getMovieDetailsById(it.toInt()) }
+        movieId?.let { viewModel.getMovieDetailsByIdAndUpdateBaskets(it.toInt()) }
 
 
         binding.btnAddToCart.setOnClickListener {
-            viewModel.getMovieDetailsById(movieId!!.toInt())
+            viewModel.getMovieDetailsByIdAndUpdateBaskets(movieId!!.toInt())
+            val bundle = bundleOf("id" to movieId)
+            findNavController().navigate(R.id.cartFragment, bundle)
         }
 
 

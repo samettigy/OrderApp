@@ -1,18 +1,13 @@
 package com.android.orderapp.ui.fragments.favorite
 
 import android.os.Bundle
-import androidx.fragment.app.Fragment
-import android.view.LayoutInflater
 import android.view.View
-import android.view.ViewGroup
 import androidx.core.os.bundleOf
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.Observer
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
-import androidx.recyclerview.widget.RecyclerView.Adapter
 import com.android.orderapp.R
-import com.android.orderapp.data.adapter.FavoritesAdapter
 import com.android.orderapp.data.adapter.MovieAdapter
 import com.android.orderapp.data.adapter.MovieAdapterInteraction
 import com.android.orderapp.data.model.MovieModel
@@ -30,6 +25,7 @@ class FavoritesFragment : BaseFragment<FavoritesViewModel, FragmentFavoritesBind
         get() = FragmentFavoritesBinding::inflate
 
     private var adapter: MovieAdapter? = null
+    val recyclerView = binding.rvFavoritesList
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
@@ -42,7 +38,6 @@ class FavoritesFragment : BaseFragment<FavoritesViewModel, FragmentFavoritesBind
                     binding.contentView.visibility = View.VISIBLE
                     binding.loadingView.visibility = View.GONE
                     adapter = MovieAdapter(screenState.movies, this)
-                    val recyclerView = binding.rvFavoritesList
                     recyclerView.layoutManager = LinearLayoutManager(requireContext())
                     recyclerView.adapter = adapter
                 }
