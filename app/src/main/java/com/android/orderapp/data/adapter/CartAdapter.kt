@@ -12,7 +12,7 @@ import com.android.orderapp.data.model.MovieModel
 import com.bumptech.glide.Glide
 
 interface CartAdapterInteraction {
-    fun onFavoriteClick(movie: MovieModel, isChecked: Boolean, itemId: String)
+    fun onFavoriteClick(movie: MovieModel, isChecked: Boolean)
     fun onItemClick(itemId: String)
 }
 
@@ -49,7 +49,7 @@ class CartAdapter(
         }
 
         holder.cbDelete.setOnCheckedChangeListener { buttonView, isChecked ->
-            interaction.onFavoriteClick(currentItem, isChecked, itemId = currentItem.id.toString())
+            interaction.onFavoriteClick(currentItem, isChecked)
         }
 
         Glide.with(holder.itemView)

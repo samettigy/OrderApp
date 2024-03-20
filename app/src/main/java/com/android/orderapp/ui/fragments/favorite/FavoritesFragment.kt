@@ -25,7 +25,7 @@ class FavoritesFragment : BaseFragment<FavoritesViewModel, FragmentFavoritesBind
         get() = FragmentFavoritesBinding::inflate
 
     private var adapter: MovieAdapter? = null
-    val recyclerView = binding.rvFavoritesList
+
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
@@ -38,6 +38,7 @@ class FavoritesFragment : BaseFragment<FavoritesViewModel, FragmentFavoritesBind
                     binding.contentView.visibility = View.VISIBLE
                     binding.loadingView.visibility = View.GONE
                     adapter = MovieAdapter(screenState.movies, this)
+                    val recyclerView = binding.rvFavoritesList
                     recyclerView.layoutManager = LinearLayoutManager(requireContext())
                     recyclerView.adapter = adapter
                 }

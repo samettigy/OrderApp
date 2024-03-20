@@ -80,6 +80,23 @@ class CartViewModel @Inject constructor(
             Log.e("addToCart", "Film sepete eklenirken hata oluştu: $it")
         }
     }
+
+
+    fun deleteToBaskets(movie: MovieModel, isChecked: Boolean) {
+        basketsDocRef.get().addOnSuccessListener { document ->
+            val favoritesList: ArrayList<String> =
+                document.get("items") as? ArrayList<String> ?: arrayListOf()
+
+            val gson = Gson()
+            val movieString = gson.toJson(movie)
+
+            favoritesList.remove(movieString)
+            basketsDocRef.update("items", favoritesList)
+
+        }
+    }
+
+
 }
 
 

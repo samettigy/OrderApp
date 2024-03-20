@@ -35,8 +35,6 @@ class LibraryFragment : BaseFragment<LibraryViewModel, FragmentLibraryBinding>()
 
 
 
-
-
         viewModel.screenState.observe(viewLifecycleOwner, Observer { screenState ->
             when (screenState) {
                 is LibrariesScreenState.Content -> {

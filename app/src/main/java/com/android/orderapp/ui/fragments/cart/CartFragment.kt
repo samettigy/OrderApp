@@ -36,11 +36,6 @@ class CartFragment : BaseFragment<CartViewModel, FragmentCartBinding>(), CartAda
 
         val movieId = arguments?.getString("id")
 
-        binding.btnPayment.setOnClickListener {
-            viewModel.getMovieDetailsByIdAndUpdateLibraries(viewModel.movieDetails as List<String>)
-            val bundle = bundleOf("id" to movieId)
-            findNavController().navigate(R.id.libraryFragment, bundle)
-        }
 
 
         viewModel.screenState.observe(viewLifecycleOwner, Observer { screenState ->
@@ -49,9 +44,14 @@ class CartFragment : BaseFragment<CartViewModel, FragmentCartBinding>(), CartAda
                     binding.contentView.visibility = View.VISIBLE
                     binding.loadingView.visibility = View.GONE
                     adapter = CartAdapter(screenState.movies, this)
+                    val basketMovies = screenState.movies
+                    binding.btnPayment.setOnClickListener {
+                        viewModel.getMovieDetailsByIdAndUpdateLibraries(basketMovies as List<String>)
+                    }
                     val recyclerView = binding.rvCartList
                     recyclerView.layoutManager = LinearLayoutManager(requireContext())
                     recyclerView.adapter = adapter
+                    adapter!!.notifyDataSetChanged()
                 }
 
                 is BasketsScreenState.Error -> {
@@ -68,11 +68,13 @@ class CartFragment : BaseFragment<CartViewModel, FragmentCartBinding>(), CartAda
         })
 
 
+
+
     }
 
 
-    override fun onFavoriteClick(movie: MovieModel, isChecked: Boolean, itemId: String) {
-
+    override fun onFavoriteClick(movie: MovieModel, isChecked: Boolean) {
+        viewModel.deleteToBaskets(movie = movie, isChecked = isChecked)
     }
 
     override fun onItemClick(itemId: String) {
