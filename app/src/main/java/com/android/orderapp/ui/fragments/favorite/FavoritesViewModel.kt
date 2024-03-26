@@ -27,7 +27,6 @@ class FavoritesViewModel @Inject constructor(
 ) : BaseViewModel() {
 
 
-
     private val _screenState =
         MutableLiveData<FavoritesScreenState>(FavoritesScreenState.Loading)
     val screenState: LiveData<FavoritesScreenState> = _screenState
@@ -69,7 +68,7 @@ class FavoritesViewModel @Inject constructor(
 
             favoritesList.remove(movieString)
             docRef.update("items", favoritesList)
-
+            getFavorites()
         }
     }
 

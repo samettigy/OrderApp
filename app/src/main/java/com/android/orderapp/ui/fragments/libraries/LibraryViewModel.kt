@@ -34,19 +34,24 @@ class LibraryViewModel @Inject constructor(
         docRef.get().addOnSuccessListener { document ->
             if (document.exists()) {
                 val items = document.get("items") as? List<String>
-                val movieModel = document.toObject(MovieModel::class.java)
-                if (movieModel != null) {
-                    _screenState.value = LibrariesScreenState.Content(listOf(movieModel))
-                } else if (items.isNullOrEmpty()) {
-                    _screenState.value = LibrariesScreenState.Error("Your favorite list is empty")
+                items?.forEach {
+                    if (items.isNotEmpty()) {
+                        _screenState.value = LibrariesScreenState.Content(items.map {
+                            gson.fromJson(
+                                it,
+                                MovieModel::class.java
+                            )
+                        })
+                    } else {
+                        _screenState.value =
+                            LibrariesScreenState.Error("Your favorite list is empty")
+                    }
                 }
             }
         }.addOnFailureListener {
             _screenState.value = LibrariesScreenState.Error("Error while loading your favorites")
         }
     }
-
-
 
 
 }

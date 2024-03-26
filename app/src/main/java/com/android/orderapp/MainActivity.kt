@@ -35,6 +35,13 @@ class MainActivity : BaseActivity<MainViewModel, ActivityMainBinding>() {
 
     }
 
+    fun topla(a:Int,b:String){
+
+    }
+
+    fun topla(a: Int,b:Int){
+
+    }
 
     /*
     private fun checkboxChange() {

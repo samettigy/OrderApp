@@ -11,6 +11,7 @@ import com.android.orderapp.data.model.FavInfo
 import com.android.orderapp.data.model.MovieModel
 import com.android.orderapp.data.repository.MoviesRepository
 import com.android.orderapp.ui.base.BaseViewModel
+import com.android.orderapp.ui.fragments.favorite.FavoritesScreenState
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.firestore.getField
@@ -29,10 +30,16 @@ class HomeViewModel @Inject constructor(
 
     private val _movieList = MutableLiveData<List<MovieModel>>()
     val movieList: LiveData<List<MovieModel>> = _movieList
+
+    private val _favorites = MutableLiveData<List<MovieModel>>()
+    val favorites: LiveData<List<MovieModel>> = _favorites
+
     private val currentUser = firebaseAuth.currentUser?.uid
+    val docRef = FirebaseFirestore.getInstance().collection("favorites").document("$currentUser")
 
     init {
         getMovies()
+        getFavorites()
     }
 
     fun getMovies() = viewModelScope.launch {
@@ -44,9 +51,19 @@ class HomeViewModel @Inject constructor(
         }
     }
 
+
+    fun getFavorites() {
+        docRef.get().addOnSuccessListener { document ->
+            (document.get("items") as? List<String>).takeIf { it.isNullOrEmpty().not() }?.let {
+                _favorites.value = it.map { movieString ->
+                    gson.fromJson(movieString, MovieModel::class.java)
+                }
+            }
+        }
+    }
+
     fun updateFavoriteStatus(movie: MovieModel, isChecked: Boolean) {
         val list: ArrayList<String> = arrayListOf()
-        var cbHave = isChecked
         val docRef = firebaseFirestore.collection("favorites").document("$currentUser")
 
         docRef.get().addOnSuccessListener { document ->
@@ -57,13 +74,8 @@ class HomeViewModel @Inject constructor(
             }
 
             var movieString = gson.toJson(movie)
-            if (list.contains(movieString)) {
-                cbHave = true
-                cbHave = isChecked
-            } else {
+            if (!list.contains(movieString)) {
                 list.add(movieString)
-                cbHave = false
-                cbHave = isChecked
             }
 
             docRef.update("items", list)

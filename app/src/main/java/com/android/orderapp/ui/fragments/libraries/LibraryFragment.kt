@@ -40,7 +40,7 @@ class LibraryFragment : BaseFragment<LibraryViewModel, FragmentLibraryBinding>()
                 is LibrariesScreenState.Content -> {
                     binding.contentView.visibility = View.VISIBLE
                     binding.loadingView.visibility = View.GONE
-                    adapter = MovieAdapter(screenState.movies, this)
+                    adapter = MovieAdapter(screenState.movies, listOf(),this)
                     val recyclerView = binding.rvFavoritesList
                     recyclerView.layoutManager = LinearLayoutManager(requireContext())
                     recyclerView.adapter = adapter

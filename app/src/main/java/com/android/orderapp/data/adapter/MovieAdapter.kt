@@ -19,6 +19,7 @@ interface MovieAdapterInteraction {
 
 class MovieAdapter(
     var moviesList: List<MovieModel>,
+    var favorites: List<MovieModel>,
     private val interaction: MovieAdapterInteraction
 ) : RecyclerView.Adapter<MovieAdapter.MovieViewHolder>() {
 
@@ -28,6 +29,7 @@ class MovieAdapter(
         val movieTitle: TextView = view.findViewById(R.id.tvMovieName)
         val movieRate: TextView = view.findViewById(R.id.tvRate)
         val movieLang: TextView = view.findViewById(R.id.tvLang)
+        val price: TextView = view.findViewById(R.id.txtPrice)
         val movieReleaseDate: TextView = view.findViewById(R.id.tvMovieDateRelease)
         val cbFav: CheckBox = view.findViewById(R.id.cbFav)
     }
@@ -43,6 +45,7 @@ class MovieAdapter(
 
     override fun onBindViewHolder(holder: MovieViewHolder, position: Int) {
         val currentItem = moviesList[position]
+        val inFavorites = favorites.any { favorite -> favorite.id?.equals(currentItem.id) == true }
 
         holder.itemView.setOnClickListener {
             interaction.onItemClick(currentItem.id.toString())
@@ -60,6 +63,8 @@ class MovieAdapter(
         holder.movieLang.text = currentItem.originalLanguage
         holder.movieTitle.text = currentItem.title
         holder.movieReleaseDate.text = currentItem.releaseDate
+        holder.cbFav.isChecked = inFavorites
+        holder.price.text = (20..200).random().toString()
     }
 
 }

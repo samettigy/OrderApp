@@ -66,7 +66,12 @@ class HomeFragment : BaseFragment<HomeViewModel, FragmentHomeBinding>(), MovieAd
 
         viewModel.movieList.observe(viewLifecycleOwner, Observer { movies ->
             if (adapter == null) {
-                adapter = MovieAdapter(movies as ArrayList<MovieModel>, this)
+                adapter =
+                    MovieAdapter(
+                        movies as ArrayList<MovieModel>,
+                        viewModel.favorites.value.orEmpty(),
+                        this
+                    )
                 recyclerView.adapter = adapter
             } else {
                 adapter?.moviesList = movies as ArrayList<MovieModel>
@@ -74,7 +79,21 @@ class HomeFragment : BaseFragment<HomeViewModel, FragmentHomeBinding>(), MovieAd
             }
         })
 
-        viewModel.getMovies()
+        viewModel.favorites.observe(viewLifecycleOwner, Observer { favorites ->
+            if (adapter == null) {
+                adapter =
+                    MovieAdapter(
+                        viewModel.movieList.value.orEmpty(),
+                        favorites,
+                        this
+                    )
+                recyclerView.adapter = adapter
+            } else {
+                adapter?.favorites = favorites
+                adapter?.notifyDataSetChanged()
+            }
+
+        })
 
         view.isFocusableInTouchMode = true
         view.requestFocus()
@@ -101,7 +120,7 @@ class HomeFragment : BaseFragment<HomeViewModel, FragmentHomeBinding>(), MovieAd
 
 
     override fun onFavoriteClick(movie: MovieModel, isChecked: Boolean) {
-        viewModel.updateFavoriteStatus(movie,isChecked)
+        viewModel.updateFavoriteStatus(movie, isChecked)
     }
 
     override fun onItemClick(itemId: String) {

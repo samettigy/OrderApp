@@ -46,7 +46,7 @@ class CartFragment : BaseFragment<CartViewModel, FragmentCartBinding>(), CartAda
                     adapter = CartAdapter(screenState.movies, this)
                     val basketMovies = screenState.movies
                     binding.btnPayment.setOnClickListener {
-                        viewModel.getMovieDetailsByIdAndUpdateLibraries(basketMovies as List<String>)
+                        viewModel.getMovieDetailsByIdAndUpdateLibraries(basketMovies)
                     }
                     val recyclerView = binding.rvCartList
                     recyclerView.layoutManager = LinearLayoutManager(requireContext())

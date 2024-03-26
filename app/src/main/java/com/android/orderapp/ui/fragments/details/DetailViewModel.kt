@@ -1,10 +1,12 @@
 package com.android.orderapp.ui.fragments.details
 
+import android.content.ContentValues.TAG
 import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.viewModelScope
 import com.android.orderapp.data.model.BasketInfo
+import com.android.orderapp.data.model.FavInfo
 import com.android.orderapp.data.model.LibrariesInfo
 import com.android.orderapp.data.model.MovieModel
 import com.android.orderapp.data.repository.MoviesRepository
@@ -25,10 +27,22 @@ class DetailViewModel @Inject constructor(
 ) : BaseViewModel() {
 
 
+
+
     private val _movieDetails = MutableLiveData<MovieModel>()
     val movieDetails: LiveData<MovieModel> = _movieDetails
+
+    private val _favorites = MutableLiveData<List<MovieModel>>()
+    val favorites: LiveData<List<MovieModel>> = _favorites
+
     val currentUser = firebaseAuth.currentUser?.uid
     val basketsDocRef = firebaseFirestore.collection("baskets").document("$currentUser")
+    val favoritesDocRef = firebaseFirestore.collection("favorites").document("$currentUser")
+
+
+    init {
+        updateFavoritesState()
+    }
 
 
     fun getMovieDetailsByIdAndUpdateBaskets(movieId: Int) = viewModelScope.launch {
@@ -58,6 +72,32 @@ class DetailViewModel @Inject constructor(
             Log.d("movies-test", "HomeViewModel.getMovies.Error ${it.message}")
         }
     }
+
+
+
+
+    fun updateFavoritesState(): Boolean {
+        val list: ArrayList<String> = arrayListOf()
+        var found = false
+
+        favoritesDocRef.get().addOnSuccessListener { document ->
+            if (document.exists()) {
+                list.addAll((document.get("items") as? List<String>).orEmpty())
+
+                list.forEach { movie ->
+                    if (list.any { it == movie }) {
+                        found = true
+                        return@forEach
+                    }
+                }
+            }
+        }.addOnFailureListener { exception ->
+            Log.d(TAG, "Error getting documents: ", exception)
+        }
+        return found
+    }
+
+
 
 
 

@@ -4,6 +4,7 @@ import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.viewModelScope
+import com.android.orderapp.data.model.FavInfo
 import com.android.orderapp.data.model.LibrariesInfo
 import com.android.orderapp.data.model.MovieModel
 import com.android.orderapp.data.repository.MoviesRepository
@@ -48,7 +49,6 @@ class CartViewModel @Inject constructor(
                             MovieModel::class.java
                         )
                     })
-                    getMovieDetailsByIdAndUpdateLibraries(list)
                 } ?: run {
                 _screenState.value = BasketsScreenState.Error("Your basket list is empty")
             }
@@ -58,28 +58,35 @@ class CartViewModel @Inject constructor(
     }
 
 
-    fun getMovieDetailsByIdAndUpdateLibraries(basketList: List<String>) = viewModelScope.launch {
+    fun getMovieDetailsByIdAndUpdateLibraries(basketList: List<MovieModel>) =
+        viewModelScope.launch {
 
-        val list: ArrayList<String> = arrayListOf()
+            val list: ArrayList<String> = arrayListOf()
+            val docRef = firebaseFirestore.collection("libraries").document("$currentUser")
 
-        librariesDocRef.get().addOnSuccessListener { document ->
-            if (document.exists()) {
-                list.addAll((document.get("items") as? List<String>).orEmpty())
-            } else {
-                librariesDocRef.set(LibrariesInfo(items = listOf()))
+            docRef.get().addOnSuccessListener { document ->
+                if (document.exists()) {
+                    list.addAll((document.get("items") as? List<String>).orEmpty())
+                } else {
+                    docRef.set(LibrariesInfo(items = listOf()))
+                }
+
+                basketList.forEach { movie ->
+                    val movieString = gson.toJson(movie)
+                    if (list.contains(movieString)) {
+                        Log.d("eklendi", "başarılı")
+                    } else {
+                        list.add(movieString)
+                    }
+                }
+
+                docRef.update("items", list)
+
+            }.addOnFailureListener {
+                Log.e("lif", "$it")
             }
 
-            var movieString = gson.toJson(basketList)
-            if (list.contains(movieString)) {
-                Log.d("eklendi", "başarılı")
-            } else {
-                list.add(movieString)
-                librariesDocRef.update("items", list)
-            }
-        }.addOnFailureListener {
-            Log.e("addToCart", "Film sepete eklenirken hata oluştu: $it")
         }
-    }
 
 
     fun deleteToBaskets(movie: MovieModel, isChecked: Boolean) {
