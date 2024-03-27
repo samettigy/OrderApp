@@ -6,8 +6,6 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.viewModelScope
 import com.android.orderapp.data.model.BasketInfo
-import com.android.orderapp.data.model.FavInfo
-import com.android.orderapp.data.model.LibrariesInfo
 import com.android.orderapp.data.model.MovieModel
 import com.android.orderapp.data.repository.MoviesRepository
 import com.android.orderapp.ui.base.BaseViewModel
@@ -27,109 +25,123 @@ class DetailViewModel @Inject constructor(
 ) : BaseViewModel() {
 
 
-
-
     private val _movieDetails = MutableLiveData<MovieModel>()
     val movieDetails: LiveData<MovieModel> = _movieDetails
 
-    private val _favorites = MutableLiveData<List<MovieModel>>()
-    val favorites: LiveData<List<MovieModel>> = _favorites
+    private val _favoritesState = MutableLiveData<Boolean>()
+    val favoritesState: LiveData<Boolean> = _favoritesState
 
+    private val _basketState = MutableLiveData<Boolean>()
+    val basketState: LiveData<Boolean> = _basketState
+
+
+    val favoritelist: ArrayList<String> = arrayListOf()
+    val basketlist: ArrayList<String> = arrayListOf()
     val currentUser = firebaseAuth.currentUser?.uid
     val basketsDocRef = firebaseFirestore.collection("baskets").document("$currentUser")
     val favoritesDocRef = firebaseFirestore.collection("favorites").document("$currentUser")
 
 
-    init {
-        updateFavoritesState()
-    }
-
-
-    fun getMovieDetailsByIdAndUpdateBaskets(movieId: Int) = viewModelScope.launch {
+    fun getMovieDetails(movieId: Int) = viewModelScope.launch {
         moviesRepository.getMovieDetailsById(movieId).onSuccess { movie ->
             _movieDetails.value = movie
 
-            val list: ArrayList<String> = arrayListOf()
+            checkMovieFavoriteStatus()
+            checkMovieBasketsStatus()
 
-            basketsDocRef.get().addOnSuccessListener { document ->
-                if (document.exists()) {
-                    list.addAll((document.get("items") as? List<String>).orEmpty())
-                } else {
-                    basketsDocRef.set(BasketInfo(items = listOf()))
-                }
 
-                var movieString = gson.toJson(movie)
-                if (list.contains(movieString)) {
-                    Log.d("eklendi", "başarılı")
-                } else {
-                    list.add(movieString)
-                    basketsDocRef.update("items", list)
-                }
-            }.addOnFailureListener {
-                Log.e("addToCart", "Film sepete eklenirken hata oluştu: $it")
-            }
         }.onFailure {
             Log.d("movies-test", "HomeViewModel.getMovies.Error ${it.message}")
         }
     }
 
+    fun updateMovieBasketStatus() {
+        var movieString = gson.toJson(_movieDetails.value)
+        if (basketlist.contains(movieString)) {
+            basketlist.remove(movieString)
+        } else {
+            basketlist.add(movieString)
+        }
+        basketsDocRef.update("items",basketlist).addOnSuccessListener {
+            checkMovieBasketsStatus()
+        }
+    }
 
-
-
-    fun updateFavoritesState(): Boolean {
-        val list: ArrayList<String> = arrayListOf()
-        var found = false
-
-        favoritesDocRef.get().addOnSuccessListener { document ->
-            if (document.exists()) {
-                list.addAll((document.get("items") as? List<String>).orEmpty())
-
-                list.forEach { movie ->
-                    if (list.any { it == movie }) {
-                        found = true
-                        return@forEach
+    fun checkMovieBasketsStatus() {
+        val movie = _movieDetails.value
+        if (movie != null) {
+            basketlist.clear()
+            basketsDocRef.get().addOnSuccessListener { document ->
+                (document.get("items") as? List<String>).takeIf { it.isNullOrEmpty().not() }
+                    ?.let { list ->
+                        basketlist.addAll(list)
+                        _basketState.value = list.any { gson.fromJson(it, MovieModel::class.java) == movie }
                     }
-                }
+            }.addOnFailureListener { exception ->
+                Log.d(TAG, "Error getting documents: ", exception)
             }
-        }.addOnFailureListener { exception ->
-            Log.d(TAG, "Error getting documents: ", exception)
         }
-        return found
     }
 
 
-
-
-
-
-    /*
-    fun updateBasketStatus(movie: MovieModel) {
-        val list: ArrayList<String> = arrayListOf()
-
-        docRef.get().addOnSuccessListener { document ->
-            if (document.exists()) {
-                list.addAll((document.get("items") as? List<String>).orEmpty())
-            } else {
-                docRef.set(BasketInfo(items = listOf()))
+    fun checkMovieFavoriteStatus() {
+        val movie = _movieDetails.value
+        if (movie != null) {
+            favoritesDocRef.get().addOnSuccessListener { document ->
+                (document.get("items") as? List<String>).takeIf { it.isNullOrEmpty().not() }
+                    ?.let { list ->
+                        favoritelist.addAll(list)
+                        _favoritesState.value = list.any { gson.fromJson(it, MovieModel::class.java) == movie }
+                    }
+            }.addOnFailureListener { exception ->
+                Log.d(TAG, "Error getting documents: ", exception)
             }
-
-            var movieString = gson.toJson(movie)
-            if (list.contains(movieString)) {
-                Log.d("eklendi", "başarılı")
-            } else {
-                list.add(movieString)
-            }
-
-            docRef.update("items", list)
-
-        }.addOnFailureListener {
-            Log.e("lif", "$it")
         }
-
     }
 
-     */
-
+    fun updateFavoriteStatus(isChecked: Boolean) {
+        var movieString = gson.toJson(_movieDetails.value)
+        if (isChecked) {
+            favoritelist.add(movieString)
+        } else {
+            favoritelist.remove(movieString)
+        }
+        favoritesDocRef.update("items",favoritelist).addOnSuccessListener {
+            checkMovieFavoriteStatus()
+        }
+    }
 
 }
+
+
+/*
+fun updateBasketStatus(movie: MovieModel) {
+    val list: ArrayList<String> = arrayListOf()
+
+    docRef.get().addOnSuccessListener { document ->
+        if (document.exists()) {
+            list.addAll((document.get("items") as? List<String>).orEmpty())
+        } else {
+            docRef.set(BasketInfo(items = listOf()))
+        }
+
+        var movieString = gson.toJson(movie)
+        if (list.contains(movieString)) {
+            Log.d("eklendi", "başarılı")
+        } else {
+            list.add(movieString)
+        }
+
+        docRef.update("items", list)
+
+    }.addOnFailureListener {
+        Log.e("lif", "$it")
+    }
+
+}
+
+ */
+
+
+
 

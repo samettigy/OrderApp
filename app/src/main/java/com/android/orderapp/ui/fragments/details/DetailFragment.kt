@@ -11,7 +11,6 @@ import com.android.orderapp.ui.base.BaseFragment
 import com.android.orderapp.ui.base.FragmentInflate
 import com.bumptech.glide.Glide
 import com.bumptech.glide.request.RequestOptions
-import com.google.gson.Gson
 import dagger.hilt.android.AndroidEntryPoint
 
 
@@ -28,14 +27,20 @@ class DetailFragment : BaseFragment<DetailViewModel, FragmentDetailBinding>() {
 
 
         val movieId = arguments?.getString("id")
-        movieId?.let { viewModel.getMovieDetailsByIdAndUpdateBaskets(it.toInt()) }
-
-        var favoritesList: List<MovieModel>
+        movieId?.let { viewModel.getMovieDetails(it.toInt()) }
 
 
         binding.btnAddToCart.setOnClickListener {
-            viewModel.getMovieDetailsByIdAndUpdateBaskets(movieId!!.toInt())
+            viewModel.updateMovieBasketStatus()
         }
+
+        viewModel.basketState.observe(viewLifecycleOwner, Observer { inBasket ->
+            if (inBasket) {
+                binding.btnAddToCart.text = "Sepetten Kaldır"
+            } else {
+                binding.btnAddToCart.text = "Sepete Ekle"
+            }
+        })
 
 
         viewModel.movieDetails.observe(viewLifecycleOwner, Observer { movieDetails ->
@@ -58,8 +63,13 @@ class DetailFragment : BaseFragment<DetailViewModel, FragmentDetailBinding>() {
         })
 
 
-        val found = viewModel.updateFavoritesState()
-        binding.cbFav.isChecked = found
+        viewModel.favoritesState.observe(viewLifecycleOwner, Observer { isFavorite ->
+            binding.cbFav.isChecked = isFavorite ?: false // Default value if null
+        })
+
+        binding.cbFav.setOnCheckedChangeListener { buttonView, isChecked ->
+            viewModel.updateFavoriteStatus(isChecked)
+        }
 
 
     }
