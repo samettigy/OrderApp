@@ -67,6 +67,7 @@ class DetailViewModel @Inject constructor(
         }
     }
 
+
     fun checkMovieBasketsStatus() {
         val movie = _movieDetails.value
         if (movie != null) {
@@ -75,7 +76,7 @@ class DetailViewModel @Inject constructor(
                 (document.get("items") as? List<String>).takeIf { it.isNullOrEmpty().not() }
                     ?.let { list ->
                         basketlist.addAll(list)
-                        _basketState.value = list.any { gson.fromJson(it, MovieModel::class.java) == movie }
+                        _basketState.value = list.any { gson.fromJson(it, MovieModel::class.java).id == movie.id }
                     }
             }.addOnFailureListener { exception ->
                 Log.d(TAG, "Error getting documents: ", exception)
@@ -91,7 +92,7 @@ class DetailViewModel @Inject constructor(
                 (document.get("items") as? List<String>).takeIf { it.isNullOrEmpty().not() }
                     ?.let { list ->
                         favoritelist.addAll(list)
-                        _favoritesState.value = list.any { gson.fromJson(it, MovieModel::class.java) == movie }
+                        _favoritesState.value = favoritelist.any { gson.fromJson(it, MovieModel::class.java).id == movie.id }
                     }
             }.addOnFailureListener { exception ->
                 Log.d(TAG, "Error getting documents: ", exception)

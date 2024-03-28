@@ -64,7 +64,7 @@ class DetailFragment : BaseFragment<DetailViewModel, FragmentDetailBinding>() {
 
 
         viewModel.favoritesState.observe(viewLifecycleOwner, Observer { isFavorite ->
-            binding.cbFav.isChecked = isFavorite ?: false // Default value if null
+            binding.cbFav.isChecked = isFavorite ?: false
         })
 
         binding.cbFav.setOnCheckedChangeListener { buttonView, isChecked ->
